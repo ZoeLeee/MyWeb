@@ -1,6 +1,7 @@
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack=require('webpack');
 
 module.exports = {
   mode: 'development',
@@ -39,29 +40,38 @@ module.exports = {
         {
           loader: "less-loader",
           options: {
+            modifyVars: {
+              'primary-color': '#1DA57A',
+              'link-color': '#1DA57A',
+              'border-radius-base': '2px',
+            },
             strictMath: true,
-            noIeCompat: true
-          }
+            noIeCompat: true,
+            javascriptEnabled: true,
+          },
         }
         ]
       },
     ]
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js",".less",".css"]
+    extensions: [".ts", ".tsx", ".js", ".less", ".css"]
   },
   devtool: 'eval',
   devServer: {
     contentBase: path.resolve(__dirname, "dist"),
-    compress:true,
-    port:8080,
-    host:'0.0.0.0'
+    compress: true,
+    port: 8080,
+    // host: '0.0.0.0',
+    hot:true
   },
   plugins: [
     // new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
       title: 'Zoe',
       template: './index.html',
-    })
+    }),
+    new webpack.NamedModulesPlugin(),//Hot
+    new webpack.HotModuleReplacementPlugin(),//Hot
   ]
 };
