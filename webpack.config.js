@@ -66,7 +66,7 @@ module.exports = {
     hot:true
   },
   plugins: [
-    // new CleanWebpackPlugin(['dist']),
+    new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
       title: 'Zoe',
       template: './index.html',

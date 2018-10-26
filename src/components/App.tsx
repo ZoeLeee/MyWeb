@@ -24,10 +24,10 @@ export class App extends React.Component {
               <Link to="/blog">生活点滴</Link>
             </Menu.Item>
             <Menu.Item>
-              <a href="#" >实用工具</a>
+              <Link to="/blog">实用工具</Link>
             </Menu.Item>
             <Menu.Item>
-              <a href="#" >留言板</a>
+              <Link to="/blog">留言板</Link>
             </Menu.Item>
             <Menu.Item>
               <a href="#" >关于我</a>
