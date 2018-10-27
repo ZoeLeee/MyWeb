@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Layout, Menu, Icon } from 'antd'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom"
+import { Main } from './Main/Main';
 export class App extends React.Component {
   render() {
     return (
@@ -47,8 +48,6 @@ export class App extends React.Component {
 }
 
 
-const Main = ()=> 
-    <div>主页</div>
 const Main1= ()=> 
     <div>主页1</div>
 const Main2 = ()=> 

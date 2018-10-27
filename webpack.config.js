@@ -22,9 +22,24 @@ module.exports = {
         }
       },
       {
-        test: /\.[(png)|(obj)|(json)]$/,
-        loader: "file-loader"
+        test: /\.[(png)|(obj)|(json)|(jpg)]$/,
+        loader: "file-loader",
+        options:{
+          // publicPath:'./src/images'
+        }
       },
+       //字体加载 blueprint
+       {
+        test: /\.(woff|woff2|jpg|png)$/,
+        use: {
+            loader: 'url-loader',
+            options: {
+                name: 'imanges/[hash].[ext]',
+                limit: 5000,
+                mimetype: 'application/font-woff'
+            }
+        }
+    },
       //样式加载 css
       {
         test: /\.css$/,
@@ -59,7 +74,7 @@ module.exports = {
   },
   devtool: 'eval',
   devServer: {
-    contentBase: path.resolve(__dirname, "dist"),
+    contentBase: path.resolve(__dirname, "./src"),
     compress: true,
     port: 8080,
     // host: '0.0.0.0',
