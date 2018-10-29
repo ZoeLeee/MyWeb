@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server",
-    "build": "webpack && ts-node ./src/Utility/Upload.ts"
+    "dev": "webpack-dev-server --config ./configs/webpack.dev.js",
+    "build": "webpack  --config ./configs/webpack.pro.js && ts-node ./src/Utility/Upload.ts"
   },
   "author": "Zoe",
   "license": "ISC",
@@ -32,7 +32,8 @@
     "url-loader": "^1.1.2",
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.9"
+    "webpack-dev-server": "^3.1.9",
+    "webpack-merge": "^4.1.4"
   },
   "dependencies": {
     "@types/react-router": "^4.0.32",

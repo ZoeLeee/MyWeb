@@ -5,8 +5,7 @@ import { Input, Card, Tag } from 'antd';
 export class KeyWordTabsComponment extends React.Component {
   render() {
     return (
-      <div className="tag">
-        <Card title="标签" bordered={false}>
+        <Card title="标签" className="tag" bordered={false}>
           <Tag color="magenta">magenta</Tag>
           <Tag color="red">red</Tag>
           <Tag color="volcano">volcano</Tag>
@@ -19,7 +18,6 @@ export class KeyWordTabsComponment extends React.Component {
           <Tag color="geekblue">geekblue</Tag>
           <Tag color="purple">purple</Tag>
         </Card>
-      </div>
     )
   }
 }

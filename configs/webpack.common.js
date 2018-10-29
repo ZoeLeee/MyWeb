@@ -1,14 +1,11 @@
 const path = require('path');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack=require('webpack');
 
-module.exports = {
-  mode: 'development',
-  entry: path.join(__dirname, './src/index'),
+exports.config = {
+  entry: path.join(__dirname, '../src/index.tsx'),
   output: {
     filename: '[hash].bundle.js',
-    path: path.resolve(__dirname, './dist')
+    path: path.resolve(__dirname, '../dist/')
   },
   module: {
     rules: [
@@ -73,20 +70,10 @@ module.exports = {
     extensions: [".ts", ".tsx", ".js", ".less", ".css"]
   },
   devtool: 'eval',
-  devServer: {
-    contentBase: path.resolve(__dirname, "./src"),
-    compress: true,
-    port: 8080,
-    // host: '0.0.0.0',
-    hot:true
-  },
   plugins: [
-    new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
       title: 'Zoe',
       template: './index.html',
     }),
-    new webpack.NamedModulesPlugin(),//Hot
-    new webpack.HotModuleReplacementPlugin(),//Hot
   ]
 };

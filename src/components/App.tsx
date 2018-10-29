@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Layout, Menu, Icon } from 'antd'
-import { BrowserRouter as Router, Route, Link } from "react-router-dom"
-import { Main } from './Main/Main';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { MainComponent } from './Main/Main';
 export class App extends React.Component {
   render() {
     return (
@@ -30,15 +30,12 @@ export class App extends React.Component {
             <Menu.Item>
               <Link to="/blog">留言板</Link>
             </Menu.Item>
-            <Menu.Item>
-              <a href="#" >关于我</a>
-            </Menu.Item>
           </Menu>
         </Layout.Header>
         <Layout.Content>
-              <Route path="/" exact component={Main} />
-              <Route path="/jx" component={Main1} />
-              <Route path="/blog" component={Main2} />
+              <Route path="/" exact component={MainComponent} />
+              <Route path="/jx" component={MainComponent} />
+              <Route path="/blog" component={MainComponent} />
         </Layout.Content>
         <Layout.Footer>footer</Layout.Footer>
       </Layout>
@@ -46,9 +43,3 @@ export class App extends React.Component {
     )
   }
 }
-
-
-const Main1= ()=> 
-    <div>主页1</div>
-const Main2 = ()=> 
-    <div>主页2</div>

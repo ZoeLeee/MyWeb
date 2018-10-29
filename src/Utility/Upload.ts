@@ -25,6 +25,7 @@ for (let f of files) {
     formData[f.substr(dir.length + 1)] = fs.createReadStream(f);
 }
 let url = `http://www.dodream.online:3000/upload`;
+// let url = `http://127.0.0.1:3000/upload`;
 rq.post({ url, formData }, function optionalCallback(err, httpResponse, body) {
     if (err || !body || JSON.parse(body)['success'] !== "ok")
         return console.error('部署失败!', err);

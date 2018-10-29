@@ -2,8 +2,9 @@ import * as React from "react";
 import { UserInfoComponent } from "./UserInfo";
 import { SearchComponent } from "./Search";
 import { KeyWordTabsComponment } from "./KeyWordTags";
+import { ArticleListCom } from "./ArticleList";
 
-export class Main extends React.Component{
+export class MainComponent extends React.Component{
   render(){
     return (
       <div>
@@ -15,6 +16,7 @@ export class Main extends React.Component{
             <UserInfoComponent />
             <SearchComponent />
             <KeyWordTabsComponment />
+            <ArticleListCom title="点击排行" />
           </div>
         </div>
       </div>
