@@ -39,7 +39,6 @@ export class ArticleListCom extends React.Component<{ title: string }>{
                 <span>{item.content}</span>
                 <img  src={item.imgUrl} />
               </div>
-              
             </List.Item>
           )}
         />

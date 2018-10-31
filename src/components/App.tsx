@@ -7,7 +7,13 @@ export class App extends React.Component {
     return (
       <Router>
       <Layout>
-        <Layout.Header>
+        <Layout.Header
+          style={{
+            position:"fixed",
+            top:0,
+            width:"100%",
+            zIndex:10
+          }}>
           <h3 className='logo'>
             Zoe个人网站
           </h3>
@@ -32,12 +38,20 @@ export class App extends React.Component {
             </Menu.Item>
           </Menu>
         </Layout.Header>
-        <Layout.Content>
+        <Layout.Content
+          style={
+            {
+              marginTop:"64px",
+            }
+          }
+        >
               <Route path="/" exact component={MainComponent} />
               <Route path="/jx" component={MainComponent} />
               <Route path="/blog" component={MainComponent} />
         </Layout.Content>
-        <Layout.Footer>footer</Layout.Footer>
+        <Layout.Footer>
+         友情链接：1，2，3，4，5，6，Lorem ipsum dolor, sit amet consectetur adipisicing elit. Necessitatibus cumque, earum fugit esse, eum nam deleniti velit aliquam, reiciendis praesentium perferendis! Aliquam perferendis ad tempora commodi, officia omnis at nisi!
+        </Layout.Footer>
       </Layout>
       </Router>
     )

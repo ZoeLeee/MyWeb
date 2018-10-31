@@ -1,8 +1,10 @@
 .content{
   display: flex;
   justify-content: space-between;
+
   &>div{
     padding: 10px 20px;
+    width: 70%;
   }
   .side-info{
     width: 30%;
@@ -48,4 +50,24 @@
   img{
     width: 30%;
   }
+}
+.article-li{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    &>div:first-child{
+      flex: 0 1 25%;
+    }
+    &>div:last-child{
+      padding-left:2rem; 
+      flex: 0 1 75%;
+    }
+
+}
+.article-info{
+    display: flex;
+    justify-content: space-between;
+    li{
+      margin-right: 1rem;
+    }
 }

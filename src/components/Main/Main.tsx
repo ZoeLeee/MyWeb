@@ -3,15 +3,35 @@ import { UserInfoComponent } from "./UserInfo";
 import { SearchComponent } from "./Search";
 import { KeyWordTabsComponment } from "./KeyWordTags";
 import { ArticleListCom } from "./ArticleList";
+import { List } from "antd";
+import { ArticleItem } from "./ArticleItem";
 
 export class MainComponent extends React.Component{
   render(){
     return (
       <div>
         <div className="content">
-          <div>
-            文章区
-          </div>
+        <List
+          itemLayout="vertical"
+          size="large"
+          dataSource={[
+            {
+              title:"陌上花开，可缓缓归矣",
+              des:"用最简单的代码，实现瀑布流布局，没有繁琐的css，没有jq，只需要做到以下就可以实现瀑布流的效果。思路很简单，看成是三列布局，分别用三个ul来调用。帝国cms列表模板，..."
+            },
+            {
+              title:"陌上花开，可缓缓归矣",
+              des:"用最简单的代码，实现瀑布流布局，没有繁琐的css，没有jq，只需要做到以下就可以实现瀑布流的效果。思路很简单，看成是三列布局，分别用三个ul来调用。帝国cms列表模板，..."
+            },
+          ]}
+          renderItem={(item) => (
+            <List.Item
+              key={item.title}
+            >
+              <ArticleItem />
+            </List.Item>
+          )}
+        />
           <div className='side-info'>
             <UserInfoComponent />
             <SearchComponent />
