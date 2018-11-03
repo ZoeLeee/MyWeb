@@ -1,6 +1,7 @@
 import { Card, Icon } from "antd";
 import { Meta } from "antd/lib/list/Item";
 import * as React from "react";
+import { Link } from "react-router-dom";
 
 export class ArticleItem extends React.Component {
 
@@ -37,7 +38,7 @@ export class ArticleItem extends React.Component {
               </span>
             </li>
           </ul>
-          <a href="">阅读原文</a>
+            <Link to="/article">阅读原文</Link>
         </div>
       </Card>
     )
