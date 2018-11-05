@@ -3,6 +3,10 @@ import { Layout, Menu, Icon } from 'antd'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { MainComponent } from './Main/Main';
 import { ArticleCom } from './Main/ArticleComponent';
+import { EditorCom } from './Editor';
+
+export const articleMap:Map<string,string>=new Map();
+
 export class App extends React.Component {
   render() {
     return (
@@ -49,7 +53,8 @@ export class App extends React.Component {
             <Route path="/" exact component={MainComponent} />
             <Route path="/jx" component={MainComponent} />
             <Route path="/blog" component={MainComponent} />
-            <Route path="/article" component={ArticleCom} />
+            <Route path="/article/:content" component={ArticleCom} />
+            <Route path="/editor" component={EditorCom} />
           </Layout.Content>
           <Layout.Footer>
             友情链接：1，2，3，4，5，6，Lorem ipsum dolor, sit amet consectetur adipisicing elit. Necessitatibus cumque, earum fugit esse, eum nam deleniti velit aliquam, reiciendis praesentium perferendis! Aliquam perferendis ad tempora commodi, officia omnis at nisi!

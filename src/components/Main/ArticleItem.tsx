@@ -38,7 +38,7 @@ export class ArticleItem extends React.Component {
               </span>
             </li>
           </ul>
-            <Link to="/article">阅读原文</Link>
+            <Link to="/article/1">阅读原文</Link>
         </div>
       </Card>
     )

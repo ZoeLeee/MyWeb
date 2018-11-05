@@ -7,6 +7,7 @@ module.exports =merge(common,{
   mode: 'development',
   devtool: 'eval',
   devServer: {
+    historyApiFallback: true,
     contentBase: path.resolve(__dirname, "../dist/"),
     compress: true,
     port: 8080,

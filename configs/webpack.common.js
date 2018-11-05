@@ -5,7 +5,8 @@ exports.config = {
   entry: path.join(__dirname, '../src/index.tsx'),
   output: {
     filename: '[hash].bundle.js',
-    path: path.resolve(__dirname, '../dist/')
+    path: path.resolve(__dirname, '../dist/'),
+    publicPath: '/'
   },
   module: {
     rules: [
