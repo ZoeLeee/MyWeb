@@ -3,9 +3,9 @@ import { Layout, Menu, Icon } from 'antd'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { MainComponent } from './Main/Main';
 import { ArticleCom } from './Main/ArticleComponent';
-import { EditorCom } from './Editor';
+import { EditorCom, IEditorState } from './Editor';
 
-export const articleMap:Map<string,string>=new Map();
+export const articleMap:Map<string,IEditorState>=new Map();
 
 export class App extends React.Component {
   render() {
@@ -53,7 +53,7 @@ export class App extends React.Component {
             <Route path="/" exact component={MainComponent} />
             <Route path="/jx" component={MainComponent} />
             <Route path="/blog" component={MainComponent} />
-            <Route path="/article/:content" component={ArticleCom} />
+            <Route path="/article/:id" component={ArticleCom} />
             <Route path="/editor" component={EditorCom} />
           </Layout.Content>
           <Layout.Footer>

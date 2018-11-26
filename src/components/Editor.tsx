@@ -1,10 +1,10 @@
-import * as React from 'react'
+import { Button, Input } from 'antd';
+import axios from 'axios';
+import * as React from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { Button } from 'antd';
-import { Link } from 'react-router-dom';
-import { articleMap } from './App';
-
+import { Redirect } from 'react-router-dom';
+import { DefaultConfig } from '../Utility/Default';
 
 
 /* 
@@ -37,41 +37,60 @@ const formats = [
   'link', 'image', 'video'
 ]
 
-interface IEditorState {
-  text: string
+export interface IEditorState {
+  title: string;
+  content: string;
+  redirect?:boolean;
 }
 
 export class EditorCom extends React.Component<{}, IEditorState> {
+  private id="";
   constructor(props) {
     super(props);
-    this.state = { text: '' }
+    this.state = {
+      title: "",
+      content: '',
+      redirect:false
+    }
   }
   handleChange = (value) => {
-    this.setState({ text: value })
+    this.setState({ content: value })
   }
-  handleClick=()=>{
-    console.log(this.state.text);
-    articleMap.set("first",this.state.text)
+  handleClick = () => {
+    axios.post(DefaultConfig.url+'write', this.state).then((res) => {
+      if (res.status === 200 && res.data.success === "ok") {
+        this.id=res.data.id;
+        this.setState({redirect: true});
+      }
+    })
   }
   render() {
+    if (this.state.redirect)
+      return <Redirect push to={"/article/"+this.id} />;
+  
     return (
       <div>
+        <div>
+          <label>标题</label>
+          <Input
+            placeholder="请输入文章标题"
+            value={this.state.title}
+            onChange={e => this.setState({ title: e.target.value })}
+          />
+        </div>
         <ReactQuill
-          value={this.state.text}
+          value={this.state.content}
           onChange={this.handleChange}
           modules={modules}
           formats={formats}
         />
         <div style={{
-          display:"flex",
-          justifyContent:"flex-end"
+          display: "flex",
+          justifyContent: "flex-end"
         }}>
-            <Link to="article/first" >
-                <Button
-                onClick={this.handleClick}
-              >发表</Button>
-            </Link>
-        
+          <Button
+            onClick={this.handleClick}
+          >发表</Button>
         </div>
       </div>
     )

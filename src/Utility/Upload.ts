@@ -1,6 +1,7 @@
 import fs = require("fs");
 import rq = require("request-promise-native");
 import path = require("path");
+import { DefaultConfig } from "./Default";
 
 
 export function getFiles(dir: string, files_: string[]) {
@@ -24,7 +25,7 @@ let formData: any = {};
 for (let f of files) {
     formData[f.substr(dir.length + 1)] = fs.createReadStream(f);
 }
-let url = `http://www.dodream.online:3000/upload`;
+let url = DefaultConfig.url+`upload`;
 // let url = `http://127.0.0.1:3000/upload`;
 rq.post({ url, formData }, function optionalCallback(err, httpResponse, body) {
     if (err || !body || JSON.parse(body)['success'] !== "ok")
