@@ -5,6 +5,8 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { Redirect } from 'react-router-dom';
 import { DefaultConfig } from '../Utility/Default';
+import { IArticleOption } from './Main/Main';
+import { formateDate } from '../Utility/Utils';
 
 
 /* 
@@ -37,9 +39,7 @@ const formats = [
   'link', 'image', 'video'
 ]
 
-export interface IEditorState {
-  title: string;
-  content: string;
+export interface IEditorState extends IArticleOption {
   redirect?:boolean;
 }
 
@@ -50,6 +50,9 @@ export class EditorCom extends React.Component<{}, IEditorState> {
     this.state = {
       title: "",
       content: '',
+      scanCount:"0",
+      tag:["js"],
+      time:"",
       redirect:false
     }
   }
@@ -57,6 +60,10 @@ export class EditorCom extends React.Component<{}, IEditorState> {
     this.setState({ content: value })
   }
   handleClick = () => {
+    this.setState({
+      time:formateDate(new Date())
+    })
+    console.log(this.state);
     axios.post(DefaultConfig.url+'write', this.state).then((res) => {
       if (res.status === 200 && res.data.success === "ok") {
         this.id=res.data.id;
@@ -89,7 +96,7 @@ export class EditorCom extends React.Component<{}, IEditorState> {
           justifyContent: "flex-end"
         }}>
           <Button
-            onClick={this.handleClick}
+            onClick={()=>this.handleClick()}
           >发表</Button>
         </div>
       </div>

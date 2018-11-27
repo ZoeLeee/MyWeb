@@ -15,7 +15,7 @@ export class ArticleItem extends React.Component<IArticleOption,{}> {
           <div>
             <Meta
               title={this.props.title}
-              description={this.props.content+"..."}
+              description={this.props.content.substr(0,100)+"..."}
             />
           </div>
         </div>
@@ -24,17 +24,17 @@ export class ArticleItem extends React.Component<IArticleOption,{}> {
             <li>
               <a href="">
                 <Icon type="paper-clip" theme="outlined" />
-                CSS3|Html5
+                {this.props.tag.join("|")}
               </a>
             </li>
             <li>
               <Icon type="clock-circle" theme="outlined" />
-              <span>2018-05-04</span>
+              <span>{this.props.time}</span>
             </li>
             <li>
               <Icon type="eye" theme="outlined" />
               <span>
-                浏览（{0}）
+                浏览（{this.props.scanCount}）
               </span>
             </li>
           </ul>

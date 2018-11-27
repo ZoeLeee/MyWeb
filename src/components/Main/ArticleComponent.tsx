@@ -1,11 +1,16 @@
-import { Card, Icon } from "antd";
+import { Card, Icon, Spin } from "antd";
 import * as React from "react";
 import { match } from "react-router";
 import { IEditorState } from "../Editor";
 import axios from 'axios';
 import { DefaultConfig } from "../../Utility/Default";
 
-export class ArticleCom extends React.Component<{match:match},IEditorState> {
+interface IArticleComState{
+  title:string,
+  content:string
+}
+
+export class ArticleCom extends React.Component<{match:match},IArticleComState> {
   constructor(props){
     super(props);
     this.state={
@@ -23,6 +28,11 @@ export class ArticleCom extends React.Component<{match:match},IEditorState> {
     })
   }
   render() {
+    if(this.state.title==="" &&this.state.content===""){
+      return <div className="spin">
+              <Spin />
+            </div>
+    }
     return (
       <Card>
         <h1 style={{textAlign:"center"}}>{this.state.title}</h1>

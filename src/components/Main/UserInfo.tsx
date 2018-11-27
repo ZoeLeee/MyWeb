@@ -8,7 +8,7 @@ export  class UserInfoComponent extends React.Component {
       <div className="user-info"> 
           <Avatar 
             size={100}
-            src={require('../../images/avaters/avatar.jpg')}
+            src={require('../../images/ava1.jpg')}
           />
           <h2>Zoe</h2>
           <h4>Web前端开发工程师</h4>
