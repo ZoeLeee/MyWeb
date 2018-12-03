@@ -54,7 +54,7 @@ export class App extends React.Component {
             <Route path="/jx" component={MainComponent} />
             <Route path="/blog" component={MainComponent} />
             <Route path="/article/:id" component={ArticleCom} />
-            <Route path="/editor" component={EditorCom} />
+            <Route path="/lz901021" component={EditorCom} />
           </Layout.Content>
           <Layout.Footer>
             友情链接：1，2，3，4，5，6，Lorem ipsum dolor, sit amet consectetur adipisicing elit. Necessitatibus cumque, earum fugit esse, eum nam deleniti velit aliquam, reiciendis praesentium perferendis! Aliquam perferendis ad tempora commodi, officia omnis at nisi!
