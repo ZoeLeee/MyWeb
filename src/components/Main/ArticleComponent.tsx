@@ -23,7 +23,10 @@ export class ArticleCom extends React.Component<{match:match},IArticleComState> 
     axios.get(DefaultConfig.url+'article/'+id).then((res)=>{
       if(res.status===200&&res.data.success==="ok"){
         let newData=res.data.data[0];
-        this.setState({title:newData.title,content:newData.content})
+        this.setState({title:newData.title,content:newData.content});
+        newData.scanCount=(parseFloat(newData.scanCount)+1).toString();
+        //更新浏览数量
+        axios.post(DefaultConfig.url+'update',newData);
       } 
     })
   }
