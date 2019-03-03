@@ -24,6 +24,7 @@
     "less-loader": "^4.1.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
+    "react-hot-loader": "^4.7.1",
     "style-loader": "^0.23.1",
     "ts-loader": "^5.2.2",
     "ts-node": "^7.0.1",

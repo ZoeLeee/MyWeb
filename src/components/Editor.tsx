@@ -7,6 +7,7 @@ import { Redirect } from 'react-router-dom';
 import { DefaultConfig } from '../Utility/Default';
 import { IArticleOption } from './Main/Main';
 import { formateDate } from '../Utility/Utils';
+import { Post } from '../Utility/Request';
 
 
 /* 
@@ -63,8 +64,7 @@ export class EditorCom extends React.Component<{}, IEditorState> {
     this.setState({
       time:formateDate(new Date())
     })
-    console.log(this.state);
-    axios.post(DefaultConfig.url+'write', this.state).then((res) => {
+    Post(DefaultConfig.url+'write', this.state,(res) => {
       if (res.status === 200 && res.data.success === "ok") {
         this.id=res.data.id;
         this.setState({redirect: true});

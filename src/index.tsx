@@ -3,7 +3,11 @@ import * as ReactDOM from "react-dom"
 import 'antd/dist/antd.css';
 
 import './style.less'
-import { App } from "./components/App";
+import  App  from "./components/App";
+
+export const AppStatus={
+
+}
 
 ReactDOM.render(
   <App />,

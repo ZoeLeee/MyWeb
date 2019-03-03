@@ -12,12 +12,12 @@ export class ArticleItem extends React.Component<IArticleOption,{}> {
           <div>
             <img src={require('../../images/zd03.jpg')} alt="" />
           </div>
-          <div>
+          <Link  to={"/article/"+this.props.id}>
             <Meta
               title={this.props.title}
               description={this.props.content.substr(0,100)+"..."}
             />
-          </div>
+          </Link>
         </div>
         <div className=" article-info">
           <ul className="list-unstyle-inline">

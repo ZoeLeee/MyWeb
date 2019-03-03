@@ -1,66 +1,26 @@
 import * as React from 'react';
-import { Layout, Menu, Icon } from 'antd'
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import { MainComponent } from './Main/Main';
-import { ArticleCom } from './Main/ArticleComponent';
-import { EditorCom, IEditorState } from './Editor';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { IEditorState } from './Editor';
+import { Login } from './Login/Login';
+import { Home } from './Main/Home';
+import { Register } from './Register/Register';
+import {hot } from 'react-hot-loader/root'
+export const articleMap: Map<string, IEditorState> = new Map();
 
-export const articleMap:Map<string,IEditorState>=new Map();
-
-export class App extends React.Component {
+const NotMatchCom = () => <div>404</div>
+class App extends React.Component{
   render() {
     return (
       <Router>
-        <Layout>
-          <Layout.Header
-            style={{
-              position: "fixed",
-              top: 0,
-              width: "100%",
-              zIndex: 10
-            }}>
-            <h3 className='logo'>
-              Zoe个人网站
-          </h3>
-            <Menu
-              mode="horizontal"
-              theme="light"
-            >
-              <Menu.Item>
-                <Link to="/">首页</Link>
-              </Menu.Item>
-              <Menu.Item>
-                <Link to="/jx">技术分享</Link>
-              </Menu.Item>
-              <Menu.Item>
-                <Link to="/blog">生活点滴</Link>
-              </Menu.Item>
-              <Menu.Item>
-                <Link to="/blog">实用工具</Link>
-              </Menu.Item>
-              <Menu.Item>
-                <Link to="/blog">留言板</Link>
-              </Menu.Item>
-            </Menu>
-          </Layout.Header>
-          <Layout.Content
-            style={
-              {
-                marginTop: "64px",
-              }
-            }
-          >
-            <Route path="/" exact component={MainComponent} />
-            <Route path="/jx" component={MainComponent} />
-            <Route path="/blog" component={MainComponent} />
-            <Route path="/article/:id" component={ArticleCom} />
-            <Route path="/lz901021" component={EditorCom} />
-          </Layout.Content>
-          <Layout.Footer>
-            友情链接：1，2，3，4，5，6，Lorem ipsum dolor, sit amet consectetur adipisicing elit. Necessitatibus cumque, earum fugit esse, eum nam deleniti velit aliquam, reiciendis praesentium perferendis! Aliquam perferendis ad tempora commodi, officia omnis at nisi!
-        </Layout.Footer>
-        </Layout>
+        <Switch>
+          <Route  exact path="/login" component={Login} />
+          <Route  exact path="/register" component={Register} />
+          <Route  path="/" component={Home} />
+          <Route  component={NotMatchCom} />
+        </Switch>
       </Router>
     )
   }
 }
+
+export default hot(App)
