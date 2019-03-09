@@ -14,9 +14,7 @@ export class Home extends React.Component<HomeProps, any> {
   private isAdmin: boolean
   componentWillMount() {
     let authority = sessionStorage.getItem('user');
-    if (!authority)
-      this.props.history.push('/login');
-    else
+    if (authority)
       this.isAdmin = authority === "1";
   }
   public render() {
