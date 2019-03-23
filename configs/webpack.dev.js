@@ -6,7 +6,7 @@ const merge=require('webpack-merge');
 
 module.exports =merge(common,{
   mode: 'development',
-  devtool: 'eval',
+  devtool: 'cheap-module-eval-source-map',
   module: {
     rules: [
       //样式加载 css

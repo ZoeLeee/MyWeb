@@ -52,7 +52,7 @@ exports.config = {
     }),
     new webpack.DllReferencePlugin({
       context: __dirname,
-      manifest: require('../dist/manifest.json')
+      manifest: require('../dist/manifest.json'),
     })
   ]
 };

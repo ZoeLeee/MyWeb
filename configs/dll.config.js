@@ -13,8 +13,8 @@ module.exports = {
     mode:"production",
     output: {
         path:path.resolve(__dirname, '../dist'),
-        filename: '[hash].[name].js',
-        library: '[name]',
+        filename: 'dll.[name].js',
+        library: 'dll',
     },
     entry: {
         "lib": vendors,
@@ -22,15 +22,9 @@ module.exports = {
     plugins: [
         new webpack.DllPlugin({
             path:path.resolve(__dirname,'../dist/manifest.json'),
-            name: '[name]',
+            name: 'dll',
             context: __dirname,
         }),
-        new CleanWebpackPlugin([`./dist/*.lib.js`], { root: path.resolve(__dirname, "../") }),
-        new webpack.optimize.UglifyJsPlugin({
-            sourceMap: true,
-            minimize: true,
-            cache: true,
-            parallel: true
-          })
+        new CleanWebpackPlugin([`./dist/*.dll.js`,`./dist/*.json`], { root: path.resolve(__dirname, "../") }),
     ]
   }
