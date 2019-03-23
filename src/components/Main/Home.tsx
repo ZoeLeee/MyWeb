@@ -5,6 +5,8 @@ import { MainComponent } from './Main';
 import { ArticleCom } from './ArticleComponent';
 import { EditorCom } from '../Editor';
 import { History } from 'history';
+import { Post } from '../../Utility/Request';
+import { DefaultConfig } from '../../Utility/Default';
 
 export interface HomeProps {
   history?: History
@@ -13,6 +15,11 @@ export interface HomeProps {
 export class Home extends React.Component<HomeProps, any> {
   private isAdmin: boolean
   componentWillMount() {
+    Post(DefaultConfig.url+'loginstatus', this.state,(res) => {
+      if (res.status === 200 && res.data.success === "ok") {
+        
+      }
+    })
     let authority = sessionStorage.getItem('user');
     if (authority)
       this.isAdmin = authority === "1";
@@ -48,6 +55,9 @@ export class Home extends React.Component<HomeProps, any> {
             </Menu.Item>
             <Menu.Item>
               <Link to="/blog">留言板</Link>
+            </Menu.Item>
+            <Menu.Item>
+              <Link to="/login">登陆</Link>
             </Menu.Item>
             {
               this.isAdmin &&

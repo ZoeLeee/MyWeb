@@ -21,7 +21,7 @@ export  class Login extends React.Component<{history?:History}, ILoginState> {
   private handClick=()=>{
     Post(DefaultConfig.url+'login', this.state,(res) => {
       if (res.status === 200 && res.data.success === "ok") {
-        sessionStorage.setItem('user',res.data.data.authority.toString());
+        sessionStorage.setItem('user',res.data.data.userInfo.authority.toString());
          this.props.history.push('/');
       }
     })

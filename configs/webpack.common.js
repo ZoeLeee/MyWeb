@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 exports.config = {
   entry: path.join(__dirname, '../src/index.tsx'),
@@ -22,48 +23,21 @@ exports.config = {
       {
         test: /\.[(png)|(obj)|(json)|(jpg)]$/,
         loader: "file-loader",
-        options:{
+        options: {
           // publicPath:'./src/images'
         }
       },
-       //字体加载 blueprint
-       {
+      //字体加载 blueprint
+      {
         test: /\.(woff|woff2|jpg|png)$/,
         use: {
-            loader: 'url-loader',
-            options: {
-                name: 'imanges/[hash].[ext]',
-                limit: 5000,
-                mimetype: 'application/font-woff'
-            }
-        }
-    },
-      //样式加载 css
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader']
-      },
-      //样式加载 less
-      {
-        test: /\.less$/,
-        use: [{
-          loader: "style-loader"
-        },
-        { loader: 'css-loader', options: { sourceMap: false } },
-        {
-          loader: "less-loader",
+          loader: 'url-loader',
           options: {
-            modifyVars: {
-              'primary-color': '#1DA57A',
-              'link-color': '#1DA57A',
-              'border-radius-base': '2px',
-            },
-            strictMath: true,
-            noIeCompat: true,
-            javascriptEnabled: true,
-          },
+            name: 'images/[hash].[ext]',
+            limit: 5000,
+            mimetype: 'application/font-woff'
+          }
         }
-        ]
       },
     ]
   },
@@ -76,5 +50,9 @@ exports.config = {
       title: 'Zoe',
       template: './index.html',
     }),
+    new webpack.DllReferencePlugin({
+      context: __dirname,
+      manifest: require('../dist/manifest.json')
+    })
   ]
 };
