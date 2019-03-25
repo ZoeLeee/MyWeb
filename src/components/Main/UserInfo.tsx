@@ -12,9 +12,16 @@ export  class UserInfoComponent extends React.Component {
           />
           <h2>Zoe</h2>
           <h4>Web前端开发工程师</h4>
-          <div>
+          <div className="user-sign">
             不忘初心，方得始终。
             在此分享自己工作生活的点滴
+          </div>
+          <h4 style={{marginTop:20}}>博客源码</h4>
+          <div>
+            前端:https://github.com/ZoeLeee/MyWeb
+          </div>
+          <div>
+            后端:https://github.com/ZoeLeee/mywebserver
           </div>
       </div>
     )

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Card, Input, Button } from 'antd';
-import { Post } from '../../Utility/Request';
-import { DefaultConfig } from '../../Utility/Default';
+import { Post, RequestStatus } from '../../utils/Request';
+import { DefaultConfig } from '../../utils/Default';
 import { History } from 'history';
 
 export interface RegisterProps {
@@ -22,7 +22,7 @@ export  class Register extends React.Component<RegisterProps, RegisterState> {
   }
   private handClick=()=>{
     Post(DefaultConfig.url+'register', this.state,(res) => {
-      if (res.status === 200 && res.data.success === "ok") {
+      if (res.status === 200 && res.data.code === RequestStatus.Ok) {
          this.props.history.push('/login');
       }
     })

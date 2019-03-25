@@ -6,7 +6,7 @@ import './style.less'
 import  App  from "./components/App";
 
 export const AppStatus={
-
+  isAdmin:false
 }
 
 ReactDOM.render(

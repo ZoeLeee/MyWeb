@@ -5,24 +5,42 @@ import { MainComponent } from './Main';
 import { ArticleCom } from './ArticleComponent';
 import { EditorCom } from '../Editor';
 import { History } from 'history';
-import { Post } from '../../Utility/Request';
-import { DefaultConfig } from '../../Utility/Default';
+import { Post, RequestStatus } from '../../utils/Request';
+import { DefaultConfig } from '../../utils/Default';
+import { AppStatus } from '../..';
 
-export interface HomeProps {
+interface HomeProps {
   history?: History
+}
+
+interface HomeState{
+  isLogin:boolean;
 }
 
 export class Home extends React.Component<HomeProps, any> {
   private isAdmin: boolean
+  constructor(props){
+    super(props);
+    this.state={
+      isLogin:false
+    }
+  }
+  private loginout=()=>{
+    Post(DefaultConfig.url+'loginout', this.state,(res) => {
+      if (res.status === 200 && res.data.code === RequestStatus.Ok) {
+        this.setState({isLogin:false});
+      }
+    })
+  }
   componentWillMount() {
-    Post(DefaultConfig.url+'loginstatus', this.state,(res) => {
-      if (res.status === 200 && res.data.success === "ok") {
-        
+    Post(DefaultConfig.url + 'loginstatus', this.state, (res) => {
+      if (res.status === 200 && res.data.code === RequestStatus.Ok) {
+        this.setState({isLogin:true});
       }
     })
     let authority = sessionStorage.getItem('user');
     if (authority)
-      this.isAdmin = authority === "1";
+      AppStatus.isAdmin = authority === "1";
   }
   public render() {
     return (
@@ -56,15 +74,20 @@ export class Home extends React.Component<HomeProps, any> {
             <Menu.Item>
               <Link to="/blog">留言板</Link>
             </Menu.Item>
-            <Menu.Item>
-              <Link to="/login">登陆</Link>
-            </Menu.Item>
             {
-              this.isAdmin &&
+              AppStatus.isAdmin &&
               <Menu.Item>
                 <Link to="/editor">发表</Link>
               </Menu.Item>
             }
+            {
+              !this.state.isLogin? <Menu.Item>
+                <Link to="/login">登陆</Link>
+              </Menu.Item>:<Menu.Item>
+                <a onClick={this.loginout} href="javascript:;">退出登陆</a>
+              </Menu.Item>
+            }
+            
           </Menu>
         </Layout.Header>
         <Layout.Content

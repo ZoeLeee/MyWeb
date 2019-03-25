@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Input, Card, Button } from 'antd';
 import { Link } from 'react-router-dom';
-import { Post } from '../../Utility/Request';
-import { DefaultConfig } from '../../Utility/Default';
+import { Post, RequestStatus } from '../../utils/Request';
+import { DefaultConfig } from '../../utils/Default';
 import { History } from 'history';
 
 export interface ILoginState {
@@ -20,7 +20,7 @@ export  class Login extends React.Component<{history?:History}, ILoginState> {
   }
   private handClick=()=>{
     Post(DefaultConfig.url+'login', this.state,(res) => {
-      if (res.status === 200 && res.data.success === "ok") {
+      if (res.status === 200 && res.data.code === RequestStatus.Ok) {
         sessionStorage.setItem('user',res.data.data.userInfo.authority.toString());
          this.props.history.push('/');
       }

@@ -4,10 +4,11 @@ import * as React from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { Redirect } from 'react-router-dom';
-import { DefaultConfig } from '../Utility/Default';
+import { DefaultConfig } from '../utils/Default';
 import { IArticleOption } from './Main/Main';
-import { formateDate } from '../Utility/Utils';
-import { Post } from '../Utility/Request';
+import { formateDate } from '../utils/Utils';
+import { Post, RequestStatus, Get } from '../utils/Request';
+import { History } from 'history';
 
 
 /* 
@@ -41,20 +42,25 @@ const formats = [
 ]
 
 export interface IEditorState extends IArticleOption {
-  redirect?:boolean;
+  redirect?: boolean;
 }
-
-export class EditorCom extends React.Component<{}, IEditorState> {
-  private id="";
+//2019.03.25，测试文章更新
+export class EditorCom extends React.Component<{ history: History }, IEditorState> {
+  private id = "";
+  private isUpdate = false;
   constructor(props) {
     super(props);
+    let state = this.props.history.location.state;
+    this.isUpdate = Boolean(state);
+    this.id = state.id;
+    console.log('state.id: ', state.id);
     this.state = {
-      title: "",
-      content: '',
-      scanCount:"0",
-      tag:["js"],
-      time:"",
-      redirect:false
+      title: state ? state.title : '',
+      content: state ? state.content : '',
+      scanCount: "0",
+      tag: ["js"],
+      time: "",
+      redirect: false
     }
   }
   handleChange = (value) => {
@@ -62,19 +68,33 @@ export class EditorCom extends React.Component<{}, IEditorState> {
   }
   handleClick = () => {
     this.setState({
-      time:formateDate(new Date())
+      time: formateDate(new Date())
     })
-    Post(DefaultConfig.url+'write', this.state,(res) => {
-      if (res.status === 200 && res.data.success === "ok") {
-        this.id=res.data.id;
-        this.setState({redirect: true});
+    if (this.isUpdate) {
+      let id = this.id;
+      let newData = {
+        _id: id,
+        ...this.state
       }
-    })
+      Post(DefaultConfig.url + 'update', newData,res=>{
+        if (res.status === 200 && res.data.code === RequestStatus.Ok) {
+          this.setState({ redirect: true });
+        }
+      })
+    } 
+    else {
+      Post(DefaultConfig.url + 'write', this.state, (res) => {
+        if (res.status === 200 && res.data.code === RequestStatus.Ok) {
+          this.id = res.data.data;
+          this.setState({ redirect: true });
+        }
+      })
+    }
   }
   render() {
     if (this.state.redirect)
-      return <Redirect push to={"/article/"+this.id} />;
-  
+      return <Redirect push to={"/article/" + this.id} />;
+
     return (
       <div>
         <div>
@@ -96,8 +116,8 @@ export class EditorCom extends React.Component<{}, IEditorState> {
           justifyContent: "flex-end"
         }}>
           <Button
-            onClick={()=>this.handleClick()}
-          >发表</Button>
+            onClick={() => this.handleClick()}
+          >{this.isUpdate ? "更新" : "发表"}</Button>
         </div>
       </div>
     )

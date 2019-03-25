@@ -2,6 +2,7 @@ import fs = require("fs");
 import rq = require("request-promise-native");
 import path = require("path");
 import { DefaultConfig } from "./Default";
+import { RequestStatus } from "./Request";
 
 
 export function getFiles(dir: string, files_: string[]) {
@@ -28,7 +29,7 @@ for (let f of files) {
 let url = DefaultConfig.url+`upload`;
 // let url = `http://127.0.0.1:3000/upload`;
 rq.post({ url, formData }, function optionalCallback(err, httpResponse, body) {
-    if (err || !body || JSON.parse(body)['success'] !== "ok")
+    if (err || !body || JSON.parse(body)['code'] !== RequestStatus.Ok)
         return console.error('部署失败!', err,body);
     else {
         console.info(`部署成功!`);

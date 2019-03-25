@@ -7,7 +7,8 @@ import { List, Spin } from "antd";
 import { ArticleItem } from "./ArticleItem";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { DefaultConfig } from "../../Utility/Default";
+import { DefaultConfig } from "../../utils/Default";
+import { RequestStatus } from "../../utils/Request";
 
 export interface IArticleOption{
   id?:string,
@@ -33,7 +34,7 @@ export class MainComponent extends React.Component<{},IArticelesState> {
     axios.get(DefaultConfig.url+'articles')
     .then(res=>{
       if(res.status===200){
-        if(res.data.success==="ok"){
+        if(res.data.code===RequestStatus.Ok){
           let div=document.createElement('div');
           let ars=this.state.articles;
           for(let article of res.data.data){
