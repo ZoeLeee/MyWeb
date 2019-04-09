@@ -1,14 +1,13 @@
 import { Button, Input } from 'antd';
-import axios from 'axios';
+import { History } from 'history';
 import * as React from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { Redirect } from 'react-router-dom';
-import { DefaultConfig } from '../utils/Default';
-import { IArticleOption } from './Main/Main';
+import { ReqApi } from '../utils/Default';
+import { Post, RequestStatus } from '../utils/Request';
 import { formateDate } from '../utils/Utils';
-import { Post, RequestStatus, Get } from '../utils/Request';
-import { History } from 'history';
+import { IArticleOption } from './Main/Main';
 
 
 /* 
@@ -44,7 +43,6 @@ const formats = [
 export interface IEditorState extends IArticleOption {
   redirect?: boolean;
 }
-//2019.03.25，测试文章更新
 export class EditorCom extends React.Component<{ history: History }, IEditorState> {
   private id = "";
   private isUpdate = false;
@@ -52,8 +50,8 @@ export class EditorCom extends React.Component<{ history: History }, IEditorStat
     super(props);
     let state = this.props.history.location.state;
     this.isUpdate = Boolean(state);
-    this.id = state.id;
-    console.log('state.id: ', state.id);
+    if(state)
+      this.id = state.id;
     this.state = {
       title: state ? state.title : '',
       content: state ? state.content : '',
@@ -76,14 +74,14 @@ export class EditorCom extends React.Component<{ history: History }, IEditorStat
         _id: id,
         ...this.state
       }
-      Post(DefaultConfig.url + 'update', newData,res=>{
+      Post(ReqApi.Update, newData,res=>{
         if (res.status === 200 && res.data.code === RequestStatus.Ok) {
           this.setState({ redirect: true });
         }
       })
     } 
     else {
-      Post(DefaultConfig.url + 'write', this.state, (res) => {
+      Post(ReqApi.Write, this.state, (res) => {
         if (res.status === 200 && res.data.code === RequestStatus.Ok) {
           this.id = res.data.data;
           this.setState({ redirect: true });

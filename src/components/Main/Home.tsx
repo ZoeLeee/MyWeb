@@ -1,13 +1,13 @@
-import * as React from 'react';
-import { Layout, Menu, Icon } from 'antd'
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
-import { MainComponent } from './Main';
-import { ArticleCom } from './ArticleComponent';
-import { EditorCom } from '../Editor';
+import { Layout, Menu } from 'antd';
 import { History } from 'history';
-import { Post, RequestStatus } from '../../utils/Request';
-import { DefaultConfig } from '../../utils/Default';
+import * as React from 'react';
+import { Link, Route, Switch } from "react-router-dom";
 import { AppStatus } from '../..';
+import { ReqApi } from '../../utils/Default';
+import { Get, RequestStatus } from '../../utils/Request';
+import { EditorCom } from '../Editor';
+import { ArticleCom } from './ArticleComponent';
+import { MainComponent } from './Main';
 
 interface HomeProps {
   history?: History
@@ -18,7 +18,6 @@ interface HomeState{
 }
 
 export class Home extends React.Component<HomeProps, any> {
-  private isAdmin: boolean
   constructor(props){
     super(props);
     this.state={
@@ -26,14 +25,14 @@ export class Home extends React.Component<HomeProps, any> {
     }
   }
   private loginout=()=>{
-    Post(DefaultConfig.url+'loginout', this.state,(res) => {
+    Get(ReqApi.LoginOut,(res) => {
       if (res.status === 200 && res.data.code === RequestStatus.Ok) {
         this.setState({isLogin:false});
       }
     })
   }
   componentWillMount() {
-    Post(DefaultConfig.url + 'loginstatus', this.state, (res) => {
+    Get(ReqApi.LoginStatus, (res) => {
       if (res.status === 200 && res.data.code === RequestStatus.Ok) {
         this.setState({isLogin:true});
       }
@@ -75,7 +74,7 @@ export class Home extends React.Component<HomeProps, any> {
               <Link to="/blog">留言板</Link>
             </Menu.Item>
             {
-              AppStatus.isAdmin &&
+              this.state.isLogin&&AppStatus.isAdmin &&
               <Menu.Item>
                 <Link to="/editor">发表</Link>
               </Menu.Item>

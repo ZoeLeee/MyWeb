@@ -1,10 +1,10 @@
-import { Card, Icon, Spin, Button } from "antd";
+import { Button, Card, Spin } from "antd";
+import { History } from "history";
 import * as React from "react";
 import { match } from "react-router";
-import { DefaultConfig } from "../../utils/Default";
-import { Get, Post, RequestStatus } from "../../utils/Request";
 import { AppStatus } from "../..";
-import { History } from "history";
+import { ReqApi } from "../../utils/Default";
+import { Get, Post, RequestStatus } from "../../utils/Request";
 
 interface IArticleComState {
   title: string,
@@ -25,13 +25,13 @@ export class ArticleCom extends React.Component<{ match: match ,history:History}
   }
   componentDidMount() {
     let id = this.props.match.params["id"];
-    Get(DefaultConfig.url + 'article/' + id, (res) => {
+    Get(ReqApi.Article + '/' + id, (res) => {
       if (res.status === 200 && res.data.code === RequestStatus.Ok) {
         let newData = res.data.data[0];
         this.setState({ title: newData.title, content: newData.content });
         newData.scanCount = (parseFloat(newData.scanCount) + 1).toString();
         //更新浏览数量
-        Post(DefaultConfig.url + 'update', newData)
+        Post(ReqApi.Update, newData)
       }
     })
   }

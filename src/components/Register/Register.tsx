@@ -1,8 +1,8 @@
-import * as React from 'react';
-import { Card, Input, Button } from 'antd';
-import { Post, RequestStatus } from '../../utils/Request';
-import { DefaultConfig } from '../../utils/Default';
+import { Button, Card, Input } from 'antd';
 import { History } from 'history';
+import * as React from 'react';
+import { ReqApi } from '../../utils/Default';
+import { Post, RequestStatus } from '../../utils/Request';
 
 export interface RegisterProps {
   history?:History
@@ -21,7 +21,7 @@ export  class Register extends React.Component<RegisterProps, RegisterState> {
     }
   }
   private handClick=()=>{
-    Post(DefaultConfig.url+'register', this.state,(res) => {
+    Post(ReqApi.Register, this.state,(res) => {
       if (res.status === 200 && res.data.code === RequestStatus.Ok) {
          this.props.history.push('/login');
       }

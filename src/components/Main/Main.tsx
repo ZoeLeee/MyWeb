@@ -1,14 +1,12 @@
-import * as React from "react";
-import { UserInfoComponent } from "./UserInfo";
-import { SearchComponent } from "./Search";
-import { KeyWordTabsComponment } from "./KeyWordTags";
-import { ArticleListCom } from "./ArticleList";
 import { List, Spin } from "antd";
+import * as React from "react";
+import { ReqApi } from "../../utils/Default";
+import { Get, RequestStatus } from "../../utils/Request";
 import { ArticleItem } from "./ArticleItem";
-import { Link } from "react-router-dom";
-import axios from "axios";
-import { DefaultConfig } from "../../utils/Default";
-import { RequestStatus } from "../../utils/Request";
+import { ArticleListCom } from "./ArticleList";
+import { KeyWordTabsComponment } from "./KeyWordTags";
+import { SearchComponent } from "./Search";
+import { UserInfoComponent } from "./UserInfo";
 
 export interface IArticleOption{
   id?:string,
@@ -31,8 +29,7 @@ export class MainComponent extends React.Component<{},IArticelesState> {
     }
   }
   componentWillMount(){
-    axios.get(DefaultConfig.url+'articles')
-    .then(res=>{
+    Get(ReqApi.Articles,(res)=>{
       if(res.status===200){
         if(res.data.code===RequestStatus.Ok){
           let div=document.createElement('div');
