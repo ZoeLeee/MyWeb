@@ -1,0 +1,35 @@
+.loading {
+  height: 100%;
+  margin: 0;
+  background: #f0f2f5;
+  width: 100%;
+  box-sizing: border-box;
+}
+header,section,div{
+  box-sizing: border-box;
+}
+.loading{
+  display: flex;
+  flex-wrap: wrap;
+}
+.loading>header {
+  height: 64px;
+  background: #fff;
+  width: 100%;
+}
+.loading>section{
+  width: 60%;
+  margin: 10px 20px;
+  height: calc(100% - 104);
+}
+.loading>section>div{
+  height: 128px;
+  background: #fff;
+  margin:30px 0;
+}
+.loading>aside{
+  flex:1;
+  margin: 10px 20px;
+  background: #fff;
+  height: calc(100% - 104px);
+}

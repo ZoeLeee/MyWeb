@@ -7,9 +7,12 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
   <base href="/">
   <title>Zoe的个人网站</title>
+  <%= htmlWebpackPlugin.options.loading.css %>
 </head>
 <body>
-  <div id="app"></div>
+  <div id="app">
+      <%= htmlWebpackPlugin.options.loading.html %>
+  </div>
   <script src="dll.lib.js"></script>
 </body>
 </html>

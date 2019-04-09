@@ -1,6 +1,12 @@
 const path = require('path');
+const fs = require('fs');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+
+const loading = {
+  html: fs.readFileSync(path.join(__dirname, '../src/load/loading.html')),
+  css: '<style>' + fs.readFileSync(path.join(__dirname, '../src/load/loading.css')) + '</style>'
+}
 
 exports.config = {
   entry: path.join(__dirname, '../src/index.tsx'),
@@ -49,6 +55,7 @@ exports.config = {
     new HtmlWebpackPlugin({
       title: 'Zoe',
       template: './index.html',
+      loading
     }),
     new webpack.DllReferencePlugin({
       context: __dirname,
