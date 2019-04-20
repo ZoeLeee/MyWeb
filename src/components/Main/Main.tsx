@@ -1,7 +1,8 @@
 import { List, Spin } from "antd";
 import * as React from "react";
-import { ReqApi } from "../../utils/Default";
-import { Get, RequestStatus } from "../../utils/Request";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
+import { fetchActicles } from "../../actions/articles";
 import { ArticleItem } from "./ArticleItem";
 import { ArticleListCom } from "./ArticleList";
 import { KeyWordTabsComponment } from "./KeyWordTags";
@@ -12,52 +13,27 @@ export interface IArticleOption{
   id?:string,
   title:string;
   content:string;
-  time:string;
+  time?:string;
   imgUrl?:string;
-  scanCount:string;
-  tag:string[];
-}
-interface IArticelesState{
-  articles:IArticleOption[]
+  scanCount?:string;
+  tag?:string[];
 }
 
-export class MainComponent extends React.Component<{},IArticelesState> {
+class MainComponent extends React.Component<{dispatch?:Dispatch,articles?:IArticleOption[]},{}> {
   constructor(props){
     super(props);
-    this.state={
-      articles:[]
-    }
   }
   componentWillMount(){
-    Get(ReqApi.Articles,(res)=>{
-      if(res.status===200){
-        if(res.data.code===RequestStatus.Ok){
-          let div=document.createElement('div');
-          let ars=this.state.articles;
-          for(let article of res.data.data){
-            div.innerHTML=article.content;
-            ars.push({
-              id:article._id,
-              title:article.title,
-              content:div.innerText,
-              time:article.time,
-              scanCount:article.scanCount,
-              tag:article.tag
-            })
-          }
-          this.setState({articles:ars});
-        }
-      }
-    })
+    this.props.dispatch(fetchActicles());
   }
   render() {
     return (
         <div className="content">
           {
-            this.state.articles.length>0?(  <List
+            this.props.articles&&this.props.articles.length>0?(  <List
               itemLayout="vertical"
               size="large"
-              dataSource={this.state.articles}
+              dataSource={this.props.articles}
               renderItem={(item) => (
                 <List.Item
                   key={item.title}
@@ -77,3 +53,11 @@ export class MainComponent extends React.Component<{},IArticelesState> {
     )
   }
 }
+
+function mapStateToProps({articles}) {
+  return {
+    articles
+  }
+}
+
+export default connect(mapStateToProps)(MainComponent);

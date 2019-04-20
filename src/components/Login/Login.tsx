@@ -2,15 +2,16 @@ import { Button, Card, Input } from 'antd';
 import { History } from 'history';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { ReqApi } from '../../utils/Default';
-import { Post, RequestStatus } from '../../utils/Request';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import { login } from '../../actions/login';
 
 export interface ILoginState {
   uname:string;
   pwd:string;
 }
 
-export  class Login extends React.Component<{history?:History}, ILoginState> {
+class Login extends React.Component<{history?:History, dispatch?: Dispatch}, ILoginState> {
   constructor(props){
     super(props);
     this.state={
@@ -19,11 +20,9 @@ export  class Login extends React.Component<{history?:History}, ILoginState> {
     }
   }
   private handClick=()=>{
-    Post(ReqApi.Login, this.state,(res) => {
-      if (res.status === 200 && res.data.code === RequestStatus.Ok) {
-        sessionStorage.setItem('user',res.data.data.userInfo.authority.toString());
-         this.props.history.push('/');
-      }
+    this.props.dispatch(login(this.state)).then(data=>{
+      if(data)
+        this.props.history.push('/');
     })
   }
   public render() {
@@ -55,3 +54,5 @@ export  class Login extends React.Component<{history?:History}, ILoginState> {
     );
   }
 }
+
+export default connect()(Login);

@@ -1,42 +1,29 @@
 import { Layout, Menu } from 'antd';
 import { History } from 'history';
 import * as React from 'react';
+import { connect } from "react-redux";
 import { Link, Route, Switch } from "react-router-dom";
+import { Dispatch } from 'redux';
 import { AppStatus } from '../..';
-import { ReqApi } from '../../utils/Default';
-import { Get, RequestStatus } from '../../utils/Request';
+import { getLoginStatus, loginOut } from '../../actions/login';
 import { EditorCom } from '../Editor';
-import { ArticleCom } from './ArticleComponent';
-import { MainComponent } from './Main';
+import ArticleCom from './ArticleComponent';
+import MainComponent from './Main';
 
 interface HomeProps {
-  history?: History
+  history?: History,
+  isLogin?: boolean,
+  dispatch?: Dispatch,
+  articles?: any;
 }
 
-interface HomeState{
-  isLogin:boolean;
-}
 
-export class Home extends React.Component<HomeProps, any> {
-  constructor(props){
-    super(props);
-    this.state={
-      isLogin:false
-    }
-  }
-  private loginout=()=>{
-    Get(ReqApi.LoginOut,(res) => {
-      if (res.status === 200 && res.data.code === RequestStatus.Ok) {
-        this.setState({isLogin:false});
-      }
-    })
+class Home extends React.Component<HomeProps, {}> {
+  private loginout = () => {
+    this.props.dispatch(loginOut());
   }
   componentWillMount() {
-    Get(ReqApi.LoginStatus, (res) => {
-      if (res.status === 200 && res.data.code === RequestStatus.Ok) {
-        this.setState({isLogin:true});
-      }
-    })
+    this.props.dispatch(getLoginStatus());
     let authority = sessionStorage.getItem('user');
     if (authority)
       AppStatus.isAdmin = authority === "1";
@@ -74,19 +61,19 @@ export class Home extends React.Component<HomeProps, any> {
               <Link to="/blog">留言板</Link>
             </Menu.Item>
             {
-              this.state.isLogin&&AppStatus.isAdmin &&
+              this.props.isLogin && AppStatus.isAdmin &&
               <Menu.Item>
                 <Link to="/editor">发表</Link>
               </Menu.Item>
             }
             {
-              !this.state.isLogin? <Menu.Item>
+              !this.props.isLogin ? <Menu.Item>
                 <Link to="/login">登陆</Link>
-              </Menu.Item>:<Menu.Item>
-                <a onClick={this.loginout} href="javascript:;">退出登陆</a>
-              </Menu.Item>
+              </Menu.Item> : <Menu.Item>
+                  <a onClick={this.loginout} href="javascript:;">退出登陆</a>
+                </Menu.Item>
             }
-            
+
           </Menu>
         </Layout.Header>
         <Layout.Content
@@ -114,3 +101,12 @@ export class Home extends React.Component<HomeProps, any> {
 
 const Jx = () => <div>技术分享</div>
 const Jx2 = () => <div>博客</div>
+
+
+function mapStatetoProps({ isLogin }) {
+  return {
+    isLogin
+  }
+}
+
+export default connect(mapStatetoProps)(Home);

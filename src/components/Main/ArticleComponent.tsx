@@ -3,49 +3,45 @@ import { History } from "history";
 import * as React from "react";
 import { match } from "react-router";
 import { AppStatus } from "../..";
-import { ReqApi } from "../../utils/Default";
-import { Get, Post, RequestStatus } from "../../utils/Request";
+import { IModel } from "../../reducers";
+import { connect } from "react-redux";
+import { IArticleOption } from "./Main";
+import { Dispatch } from "redux";
+import { fetchArticleData, showArticle } from "../../actions/articles";
 
-interface IArticleComState {
-  title: string,
-  content: string
+interface IArticleProps{
+  match: match;
+  history:History;
+  article:IArticleOption;
+  dispatch:Dispatch;
 }
 
-export class ArticleCom extends React.Component<{ match: match ,history:History}, IArticleComState> {
+class ArticleCom extends React.Component<IArticleProps, {}> {
   constructor(props) {
     super(props);
-    this.state = {
-      title: "",
-      content: ""
-    }
   }
   private EditorArtice = () => {
     let data={...this.state,id:this.props.match.params["id"]}
     this.props.history.push("/editor",data);
   }
+  componentWillUnmount(){
+    this.props.dispatch(showArticle({title:"",content:""}))
+  }
   componentDidMount() {
     let id = this.props.match.params["id"];
-    Get(ReqApi.Article + '/' + id, (res) => {
-      if (res.status === 200 && res.data.code === RequestStatus.Ok) {
-        let newData = res.data.data[0];
-        this.setState({ title: newData.title, content: newData.content });
-        newData.scanCount = (parseFloat(newData.scanCount) + 1).toString();
-        //更新浏览数量
-        Post(ReqApi.Update, newData)
-      }
-    })
+    this.props.dispatch(fetchArticleData(id))
   }
   render() {
-    if (this.state.title === "" && this.state.content === "") {
+    if (this.props.article.title === "" && this.props.article.content === "") {
       return <div className="spin">
         <Spin />
       </div>
     }
     return (
       <Card>
-        <h1 style={{ textAlign: "center" }}>{this.state.title}</h1>
+        <h1 style={{ textAlign: "center" }}>{this.props.article.title}</h1>
         <div
-          dangerouslySetInnerHTML={{ __html: this.state.content }}></div>
+          dangerouslySetInnerHTML={{ __html: this.props.article.content }}></div>
         {
           AppStatus.isAdmin && <div style={{ textAlign: "right" }}>
             <Button onClick={this.EditorArtice} type="primary">编辑</Button>
@@ -54,3 +50,9 @@ export class ArticleCom extends React.Component<{ match: match ,history:History}
     )
   }
 }
+
+function mapStateToProps({article}:IModel){
+  return {article}
+}
+
+export default connect(mapStateToProps)(ArticleCom)

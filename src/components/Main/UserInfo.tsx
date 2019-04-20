@@ -18,10 +18,10 @@ export  class UserInfoComponent extends React.Component {
           </div>
           <h4 style={{marginTop:20}}>博客源码</h4>
           <div>
-            前端:https://github.com/ZoeLeee/MyWeb
+            前端:<a href="https://github.com/ZoeLeee/MyWeb" target="blank">https://github.com/ZoeLeee/MyWeb</a>
           </div>
           <div>
-            后端:https://github.com/ZoeLeee/mywebserver
+            后端:<a href="https://github.com/ZoeLeee/mywebserver" target="blank">https://github.com/ZoeLeee/mywebserver</a>
           </div>
       </div>
     )
