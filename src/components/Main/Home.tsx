@@ -1,19 +1,16 @@
 import { Layout, Menu } from 'antd';
-import { History } from 'history';
 import * as React from 'react';
 import { connect } from "react-redux";
 import { Link, Route, Switch } from "react-router-dom";
-import { Dispatch } from 'redux';
 import { AppStatus } from '../..';
 import { getLoginStatus, loginOut } from '../../actions/login';
-import { EditorCom } from '../Editor';
+import { IReduxProps } from '../App';
+import EditorCom from '../Editor';
 import ArticleCom from './ArticleComponent';
 import MainComponent from './Main';
 
-interface HomeProps {
-  history?: History,
+interface HomeProps extends IReduxProps {
   isLogin?: boolean,
-  dispatch?: Dispatch,
   articles?: any;
 }
 

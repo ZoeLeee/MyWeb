@@ -1,17 +1,16 @@
 import { Button, Card, Input } from 'antd';
-import { History } from 'history';
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { Link } from 'react-router-dom';
 import { login } from '../../actions/login';
+import { IReduxProps } from '../App';
 
 export interface ILoginState {
   uname:string;
   pwd:string;
 }
 
-class Login extends React.Component<{history?:History, dispatch?: Dispatch}, ILoginState> {
+class Login extends React.Component<IReduxProps, ILoginState> {
   constructor(props){
     super(props);
     this.state={
@@ -20,8 +19,8 @@ class Login extends React.Component<{history?:History, dispatch?: Dispatch}, ILo
     }
   }
   private handClick=()=>{
-    this.props.dispatch(login(this.state)).then(data=>{
-      if(data)
+    this.props.dispatch(login(this.state)).then(isOk=>{
+      if(isOk)
         this.props.history.push('/');
     })
   }

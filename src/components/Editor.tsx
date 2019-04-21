@@ -1,12 +1,12 @@
 import { Button, Input } from 'antd';
-import { History } from 'history';
 import * as React from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { ReqApi } from '../utils/Default';
-import { Post, RequestStatus } from '../utils/Request';
+import { updateArticle, writeArticle } from '../actions/articles';
 import { formateDate } from '../utils/Utils';
+import { IReduxProps } from './App';
 import { IArticleOption } from './Main/Main';
 
 
@@ -43,14 +43,15 @@ const formats = [
 export interface IEditorState extends IArticleOption {
   redirect?: boolean;
 }
-export class EditorCom extends React.Component<{ history: History }, IEditorState> {
+
+class EditorCom extends React.Component<IReduxProps, IEditorState> {
   private id = "";
   private isUpdate = false;
   constructor(props) {
     super(props);
     let state = this.props.history.location.state;
     this.isUpdate = Boolean(state);
-    if(state)
+    if (state)
       this.id = state.id;
     this.state = {
       title: state ? state.title : '',
@@ -74,16 +75,14 @@ export class EditorCom extends React.Component<{ history: History }, IEditorStat
         _id: id,
         ...this.state
       }
-      Post(ReqApi.Update, newData,res=>{
-        if (res.status === 200 && res.data.code === RequestStatus.Ok) {
-          this.setState({ redirect: true });
-        }
+      this.props.dispatch(updateArticle(newData)).then(isOK => {
+        isOK && this.setState({ redirect: true });
       })
-    } 
+    }
     else {
-      Post(ReqApi.Write, this.state, (res) => {
-        if (res.status === 200 && res.data.code === RequestStatus.Ok) {
-          this.id = res.data.data;
+      this.props.dispatch(writeArticle(this.state)).then(id=>{
+        if(id){
+          this.id = id;
           this.setState({ redirect: true });
         }
       })
@@ -104,7 +103,7 @@ export class EditorCom extends React.Component<{ history: History }, IEditorStat
           />
         </div>
         <ReactQuill
-          value={this.state.content}
+          value={this.state.content || ""}
           onChange={this.handleChange}
           modules={modules}
           formats={formats}
@@ -121,3 +120,5 @@ export class EditorCom extends React.Component<{ history: History }, IEditorStat
     )
   }
 }
+
+export default connect()(EditorCom);

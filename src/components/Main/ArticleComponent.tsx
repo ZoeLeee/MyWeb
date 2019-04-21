@@ -20,9 +20,12 @@ class ArticleCom extends React.Component<IArticleProps, {}> {
   constructor(props) {
     super(props);
   }
-  private EditorArtice = () => {
-    let data={...this.state,id:this.props.match.params["id"]}
+  private editorArtice = () => {
+    let data={...this.props.article,id:this.props.match.params["id"]}
     this.props.history.push("/editor",data);
+  }
+  private deleteArticle=()=>{
+    
   }
   componentWillUnmount(){
     this.props.dispatch(showArticle({title:"",content:""}))
@@ -44,7 +47,8 @@ class ArticleCom extends React.Component<IArticleProps, {}> {
           dangerouslySetInnerHTML={{ __html: this.props.article.content }}></div>
         {
           AppStatus.isAdmin && <div style={{ textAlign: "right" }}>
-            <Button onClick={this.EditorArtice} type="primary">编辑</Button>
+            <Button onClick={this.editorArtice} type="primary">编辑</Button>
+            <Button onClick={this.editorArtice} type="primary">删除</Button>
           </div>}
       </Card>
     )

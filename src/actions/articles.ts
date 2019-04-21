@@ -2,6 +2,7 @@ import { IArticleOption } from "../components/Main/Main";
 import { iFetch, RequestStatus } from "../utils/Request";
 import { ReqApi } from "../utils/Default";
 import { GET_ARTICLES, SHOW_ARTICLE } from ".";
+import { saveScanIdAndIsUpdate } from "../utils/Utils";
 
 
 const getArticles = (articles: IArticleOption[]) => {
@@ -45,13 +46,26 @@ export const fetchActicles:any = () => dispatch => {
 export const fetchArticleData:any=(id:string)=>dispatch=>{
   return iFetch(ReqApi.Article+'/'+id).then(data=>{
     if(data.code===RequestStatus.Ok){
-      console.log(data);
       let newData=data.data[0];
       dispatch(showArticle(newData));
       return newData;
     }
   }).then(data=>{
-    data.scanCount = (parseFloat(data.scanCount) + 1).toString();
-    iFetch(ReqApi.Update,data);
+    if(saveScanIdAndIsUpdate(id)){
+      data.scanCount = (parseFloat(data.scanCount) + 1).toString();
+      iFetch(ReqApi.Update,data);
+    }
   })
+}
+
+export const updateArticle:any=(data)=>dispatch=>{
+  return iFetch(ReqApi.Update,data).then(res=>{
+    return res.code === RequestStatus.Ok;
+  });
+}
+
+export const writeArticle:any=(data)=>dispatch=>{
+  return iFetch(ReqApi.Write,data).then(res=>{
+    return res.data ;
+  });
 }

@@ -1,30 +1,26 @@
 import { Button, Card, Input } from 'antd';
-import { History } from 'history';
 import * as React from 'react';
-import { ReqApi } from '../../utils/Default';
-import { Post, RequestStatus } from '../../utils/Request';
+import { connect } from 'react-redux';
+import { register } from '../../actions/login';
+import { IReduxProps } from '../App';
 
-export interface RegisterProps {
-  history?:History
-}
 export interface RegisterState {
-  uname:string;
-  pwd:string;
+  uname: string;
+  pwd: string;
 }
 
-export  class Register extends React.Component<RegisterProps, RegisterState> {
-  constructor(props){
+class Register extends React.Component<IReduxProps, RegisterState> {
+  constructor(props) {
     super(props);
-    this.state={
-      uname:"",
-      pwd:"",
+    this.state = {
+      uname: "",
+      pwd: "",
     }
   }
-  private handClick=()=>{
-    Post(ReqApi.Register, this.state,(res) => {
-      if (res.status === 200 && res.data.code === RequestStatus.Ok) {
-         this.props.history.push('/login');
-      }
+  private handClick = () => {
+    this.props.dispatch(register(this.state)).then(isOK => {
+      if (isOK)
+        this.props.history.push('/login');
     })
   }
   public render() {
@@ -32,11 +28,11 @@ export  class Register extends React.Component<RegisterProps, RegisterState> {
       <Card className="login" title="欢迎注册博客">
         <label>
           <span>账号</span>
-          <Input placeholder="输入用户名" value={this.state.uname} onChange={e=>this.setState({uname:e.target.value})} />
+          <Input placeholder="输入用户名" value={this.state.uname} onChange={e => this.setState({ uname: e.target.value })} />
         </label>
         <label>
           <span>密码</span>
-          <Input type="password" placeholder="输入密码"  value={this.state.pwd}  onChange={e=>this.setState({pwd:e.target.value})} />
+          <Input type="password" placeholder="输入密码" value={this.state.pwd} onChange={e => this.setState({ pwd: e.target.value })} />
         </label>
         <div>
           <Button type="primary" onClick={this.handClick}>注册</Button>
@@ -45,3 +41,5 @@ export  class Register extends React.Component<RegisterProps, RegisterState> {
     );
   }
 }
+
+export default connect()(Register);

@@ -1,5 +1,5 @@
 import { SET_LOGIN } from ".";
-import { iFetch, RequestStatus, Post } from "../utils/Request";
+import { iFetch, RequestStatus } from "../utils/Request";
 import { ReqApi } from "../utils/Default";
 
 const setLogin=(isLogin:boolean)=>{
@@ -20,8 +20,13 @@ export const loginOut:any =()=>dispatch=>{
   })
 }
 
+export interface ISignOPtion{
+  uname:string;
+  pwd:string;
+  [key:string]:string;
+}
 
-export const login:any=(data:{uname:string,pwd:string})=>dispatch=>{
+export const login:any=(data:ISignOPtion)=>dispatch=>{
   return iFetch(ReqApi.Login,data).then(data=>{
     if(data.code===RequestStatus.Ok){
       sessionStorage.setItem('user',data.data.userInfo.authority.toString());
@@ -29,5 +34,11 @@ export const login:any=(data:{uname:string,pwd:string})=>dispatch=>{
       return true;
     }
     return false;
+  })
+}
+
+export const register:any=(data:ISignOPtion)=>dispatch=>{
+  return iFetch(ReqApi.Register,data).then(data=>{
+    return data.code===RequestStatus.Ok;
   })
 }

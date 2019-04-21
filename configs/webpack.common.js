@@ -55,7 +55,8 @@ exports.config = {
     new HtmlWebpackPlugin({
       title: 'Zoe',
       template: './index.html',
-      loading
+      loading,
+      favicon:path.resolve(__dirname,'../favicon.ico')
     }),
     new webpack.DllReferencePlugin({
       context: __dirname,

@@ -2,13 +2,20 @@ import * as React from 'react';
 import { hot } from 'react-hot-loader/root';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { applyMiddleware, createStore } from 'redux';
+import { applyMiddleware, createStore, Dispatch } from 'redux';
 import thunk from 'redux-thunk';
-import { appReducer, IModel } from '../reducers';
+import { appReducer } from '../reducers';
 import { IEditorState } from './Editor';
 import Login from './Login/Login';
 import Home from './Main/Home';
-import { Register } from './Register/Register';
+import Register from './Register/Register';
+import { History } from 'history';
+
+
+export interface IReduxProps{
+  history:History;
+  dispatch:Dispatch;
+}
 
 export const articleMap: Map<string, IEditorState> = new Map();
 const NotMatchCom = () => <div>404</div>
