@@ -1,6 +1,6 @@
-import fs = require("fs");
-import rq = require("request-promise-native");
-import path = require("path");
+const fs = require("fs");
+const rq = require("request-promise-native");
+const path = require("path");
 import { RequestStatus } from "./Request";
 import { ReqApi } from "./Default";
 

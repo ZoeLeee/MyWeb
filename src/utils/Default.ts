@@ -1,5 +1,5 @@
  // url:"http://127.0.0.1:3000/"
-export const CURRENT_HOST="http://www.dodream.online:3000/";
+export const CURRENT_HOST="http://www.dodream.top:3000/";
 // export const CURRENT_HOST="http://127.0.0.1:3000/";
 
 export const ReqApi={
