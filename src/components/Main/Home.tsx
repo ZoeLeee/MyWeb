@@ -5,7 +5,6 @@ import { Link, Route, Switch } from "react-router-dom";
 import { AppStatus } from '../..';
 import { getLoginStatus, loginOut } from '../../actions/login';
 import { IReduxProps } from '../App';
-import EditorCom from '../Editor';
 import ArticleCom from './ArticleComponent';
 import MainComponent from './Main';
 
@@ -85,7 +84,6 @@ class Home extends React.Component<HomeProps, {}> {
             <Route exact path="/jx" component={Jx} />
             <Route exact path="/blog" component={Jx2} />
             <Route exact path="/article/:id" component={ArticleCom} />
-            <Route exact path="/editor" component={EditorCom} />
           </Switch>
         </Layout.Content>
         <Layout.Footer

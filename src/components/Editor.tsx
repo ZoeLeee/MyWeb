@@ -3,7 +3,7 @@ import * as React from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { updateArticle, writeArticle } from '../actions/articles';
 import { formateDate } from '../utils/Utils';
 import { IReduxProps } from './App';
@@ -125,8 +125,9 @@ class EditorCom extends React.Component<IReduxProps, IEditorState> {
       return <Redirect push to={"/article/" + this.id} />;
 
     return (
-      <div>
+      <div className="editor">
         <div>
+          <Link to="/">首页</Link>
           <label>标题</label>
           <Input
             placeholder="请输入文章标题"
@@ -139,11 +140,12 @@ class EditorCom extends React.Component<IReduxProps, IEditorState> {
           onChange={this.handleChange}
           modules={modules}
           formats={formats}
-          style={{background: "white"}}
+          scrollingContainer="ql-editor"
         />
         <div style={{
           display: "flex",
-          justifyContent: "flex-end"
+          justifyContent: "flex-end",
+          
         }}>
           <Button
             onClick={() => this.handleClick()}
