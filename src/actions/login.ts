@@ -29,7 +29,7 @@ export interface ISignOPtion{
 export const login:any=(data:ISignOPtion)=>dispatch=>{
   return iFetch(ReqApi.Login,data).then(data=>{
     if(data.code===RequestStatus.Ok){
-      sessionStorage.setItem('user',data.data.userInfo.authority.toString());
+      localStorage.setItem('user',data.data.userInfo.authority.toString());
       dispatch(setLogin(true));
       return true;
     }

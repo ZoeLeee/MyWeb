@@ -9,16 +9,40 @@ import { formateDate } from '../utils/Utils';
 import { IReduxProps } from './App';
 import { IArticleOption } from './Main/Main';
 
-
 /* 
  * Quill modules to attach to editor
  * See https://quilljs.com/docs/modules/ for complete options
  */
+// console.log('window["hljs"].: ', window["hljs"]);
+
+
+var bindings = {
+  // This will overwrite the default binding also named 'tab'
+  tab: {
+    key: 9,
+    handler: function() {
+      // Handle tab
+    }
+  },
+
+  // There is no default binding named 'custom'
+  // so this will be added without overwriting anything
+  custom: {
+    key: 'B',
+    shiftKey: true,
+    handler: function(range, context) {
+      // Handle shift+b
+      console.log(range,context);
+    }
+  },
+};
+
 const modules = {
+  syntax:true,
   toolbar: [
     [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
     [{ size: [] }],
-    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+    ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block'],
     [{ 'list': 'ordered' }, { 'list': 'bullet' },
     { 'indent': '-1' }, { 'indent': '+1' }],
     ['link', 'image', 'video'],
@@ -27,8 +51,16 @@ const modules = {
   clipboard: {
     // toggle to add extra line breaks when pasting HTML:
     matchVisual: false,
+  },
+  keyboard:{
+    bindings
   }
 }
+
+window["hljs"].configure({   // optionally configure hljs
+  languages: ['javascript','typescript']
+});
+
 /* 
  * Quill editor formats
  * See https://quilljs.com/docs/formats/
@@ -37,7 +69,7 @@ const formats = [
   'header', 'font', 'size',
   'bold', 'italic', 'underline', 'strike', 'blockquote',
   'list', 'bullet', 'indent',
-  'link', 'image', 'video'
+  'link', 'image', 'video','code-block',
 ]
 
 export interface IEditorState extends IArticleOption {
@@ -107,6 +139,7 @@ class EditorCom extends React.Component<IReduxProps, IEditorState> {
           onChange={this.handleChange}
           modules={modules}
           formats={formats}
+          style={{background: "white"}}
         />
         <div style={{
           display: "flex",

@@ -21,7 +21,7 @@ class Home extends React.Component<HomeProps, {}> {
   }
   componentWillMount() {
     this.props.dispatch(getLoginStatus());
-    let authority = sessionStorage.getItem('user');
+    let authority = localStorage.getItem('user');
     if (authority)
       AppStatus.isAdmin = authority === "1";
   }
@@ -88,7 +88,14 @@ class Home extends React.Component<HomeProps, {}> {
             <Route exact path="/editor" component={EditorCom} />
           </Switch>
         </Layout.Content>
-        <Layout.Footer>
+        <Layout.Footer
+        style={{
+          position: "fixed",
+          bottom: 0,
+          width: "100%",
+          zIndex: 10
+        }}
+        >
           <a href="http://www.beian.miit.gov.cn/">闽ICP备19012108号</a>
         </Layout.Footer>
       </Layout>

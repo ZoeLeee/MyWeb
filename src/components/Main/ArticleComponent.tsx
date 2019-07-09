@@ -43,13 +43,16 @@ class ArticleCom extends React.Component<IArticleProps, {}> {
     return (
       <Card>
         <h1 style={{ textAlign: "center" }}>{this.props.article.title}</h1>
+        <div className="ql-snow">
         <div
+          className="ql-editor"
           dangerouslySetInnerHTML={{ __html: this.props.article.content }}></div>
         {
           AppStatus.isAdmin && <div style={{ textAlign: "right" }}>
             <Button onClick={this.editorArtice} type="primary">编辑</Button>
             <Button onClick={this.editorArtice} type="primary">删除</Button>
           </div>}
+        </div>
       </Card>
     )
   }
