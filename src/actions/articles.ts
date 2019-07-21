@@ -12,7 +12,6 @@ const getArticles = (articles: IArticleOption[]) => {
   }
 }
 
-
 export const showArticle=(article:IArticleOption)=>{
   return {
     type:SHOW_ARTICLE,

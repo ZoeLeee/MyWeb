@@ -2,7 +2,7 @@ import { Card, Icon } from "antd";
 import { Meta } from "antd/lib/list/Item";
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { IArticleOption } from "./Main";
+import { IArticleOption } from "../Main/Main";
 export class ArticleItem extends React.Component<IArticleOption,{}> {
 
   render() {

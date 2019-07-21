@@ -5,7 +5,7 @@ import { match } from "react-router";
 import { AppStatus } from "../..";
 import { IModel } from "../../reducers";
 import { connect } from "react-redux";
-import { IArticleOption } from "./Main";
+import { IArticleOption } from "../Main/Main";
 import { Dispatch } from "redux";
 import { fetchArticleData, showArticle } from "../../actions/articles";
 
@@ -50,7 +50,7 @@ class ArticleCom extends React.Component<IArticleProps, {}> {
         {
           AppStatus.isAdmin && <div style={{ textAlign: "right" }}>
             <Button onClick={this.editorArtice} type="primary">编辑</Button>
-            <Button onClick={this.editorArtice} type="primary">删除</Button>
+            <Button onClick={this.deleteArticle} type="primary">删除</Button>
           </div>}
         </div>
       </Card>

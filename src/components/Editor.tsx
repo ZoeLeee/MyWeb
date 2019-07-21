@@ -1,4 +1,4 @@
-import { Button, Input } from 'antd';
+import { Button, Input, Layout, Menu } from 'antd';
 import * as React from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -13,32 +13,8 @@ import { IArticleOption } from './Main/Main';
  * Quill modules to attach to editor
  * See https://quilljs.com/docs/modules/ for complete options
  */
-// console.log('window["hljs"].: ', window["hljs"]);
-
-
-var bindings = {
-  // This will overwrite the default binding also named 'tab'
-  tab: {
-    key: 9,
-    handler: function() {
-      // Handle tab
-    }
-  },
-
-  // There is no default binding named 'custom'
-  // so this will be added without overwriting anything
-  custom: {
-    key: 'B',
-    shiftKey: true,
-    handler: function(range, context) {
-      // Handle shift+b
-      console.log(range,context);
-    }
-  },
-};
-
 const modules = {
-  syntax:true,
+  syntax: true,
   toolbar: [
     [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
     [{ size: [] }],
@@ -51,14 +27,11 @@ const modules = {
   clipboard: {
     // toggle to add extra line breaks when pasting HTML:
     matchVisual: false,
-  },
-  keyboard:{
-    bindings
   }
 }
 
 window["hljs"].configure({   // optionally configure hljs
-  languages: ['javascript','typescript']
+  languages: ['javascript', 'typescript']
 });
 
 /* 
@@ -69,7 +42,7 @@ const formats = [
   'header', 'font', 'size',
   'bold', 'italic', 'underline', 'strike', 'blockquote',
   'list', 'bullet', 'indent',
-  'link', 'image', 'video','code-block',
+  'link', 'image', 'video', 'code-block',
 ]
 
 export interface IEditorState extends IArticleOption {
@@ -82,6 +55,7 @@ class EditorCom extends React.Component<IReduxProps, IEditorState> {
   constructor(props) {
     super(props);
     let state = this.props.history.location.state;
+    console.log('state: ', state);
     this.isUpdate = Boolean(state);
     if (state)
       this.id = state.id;
@@ -89,7 +63,7 @@ class EditorCom extends React.Component<IReduxProps, IEditorState> {
       title: state ? state.title : '',
       content: state ? state.content : '',
       scanCount: "0",
-      tag: ["js"],
+      tag:state?state.tag:[],
       time: "",
       redirect: false
     }
@@ -112,8 +86,8 @@ class EditorCom extends React.Component<IReduxProps, IEditorState> {
       })
     }
     else {
-      this.props.dispatch(writeArticle(this.state)).then(id=>{
-        if(id){
+      this.props.dispatch(writeArticle(this.state)).then(id => {
+        if (id) {
           this.id = id;
           this.setState({ redirect: true });
         }
@@ -125,33 +99,58 @@ class EditorCom extends React.Component<IReduxProps, IEditorState> {
       return <Redirect push to={"/article/" + this.id} />;
 
     return (
-      <div className="editor">
-        <div>
-          <Link to="/">首页</Link>
-          <label>标题</label>
-          <Input
-            placeholder="请输入文章标题"
-            value={this.state.title}
-            onChange={e => this.setState({ title: e.target.value })}
+      <Layout>
+        <Layout.Header
+          style={{
+            position: "fixed",
+            top: 0,
+            width: "100%",
+            zIndex: 10
+          }}>
+          <h3 className='logo'>
+            <Link to="/">Joe个人网站</Link>
+          </h3>
+          <Menu
+            mode="horizontal"
+            theme="light"
+          >
+            <Menu.Item>
+              <Button
+                type="primary"
+                onClick={() => this.handleClick()}
+              >{this.isUpdate ? "更新" : "发表"}</Button>
+            </Menu.Item>
+          </Menu>
+        </Layout.Header>
+        <Layout.Content
+          className="editor"
+          style={
+            {
+              padding: "64px 32px",
+            }
+          }
+        >
+          <div>
+            <Input
+              placeholder="请输入文章标题"
+              value={this.state.title}
+              onChange={e => this.setState({ title: e.target.value })}
+            />
+            <Input
+              placeholder="请输入标签"
+              defaultValue={this.state.tag.join(",")}
+              onChange={e => this.setState({ tag: e.target.value.split(",").map(s=>s.trim()) })}
+            />
+          </div>
+          <ReactQuill
+            value={this.state.content || ""}
+            onChange={this.handleChange}
+            modules={modules}
+            formats={formats}
+            scrollingContainer="ql-editor"
           />
-        </div>
-        <ReactQuill
-          value={this.state.content || ""}
-          onChange={this.handleChange}
-          modules={modules}
-          formats={formats}
-          scrollingContainer="ql-editor"
-        />
-        <div style={{
-          display: "flex",
-          justifyContent: "flex-end",
-          
-        }}>
-          <Button
-            onClick={() => this.handleClick()}
-          >{this.isUpdate ? "更新" : "发表"}</Button>
-        </div>
-      </div>
+        </Layout.Content>
+      </Layout>
     )
   }
 }

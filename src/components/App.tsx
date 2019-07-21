@@ -24,7 +24,8 @@ const NotMatchCom = () => <div>404</div>
 const initialState={
   isLogin:false,
   articles:[],
-  article:{title:"",content:""}
+  article:{title:"",content:""},
+  tags:[],
 }
 
 let store = createStore(appReducer,initialState, applyMiddleware(thunk));

@@ -5,7 +5,7 @@ import { Link, Route, Switch } from "react-router-dom";
 import { AppStatus } from '../..';
 import { getLoginStatus, loginOut } from '../../actions/login';
 import { IReduxProps } from '../App';
-import ArticleCom from './ArticleComponent';
+import ArticleCom from '../Articles/ArticleComponent';
 import MainComponent from './Main';
 
 interface HomeProps extends IReduxProps {
@@ -35,7 +35,7 @@ class Home extends React.Component<HomeProps, {}> {
             zIndex: 10
           }}>
           <h3 className='logo'>
-            Zoe个人网站
+            Joe个人网站
               </h3>
           <Menu
             mode="horizontal"
@@ -48,10 +48,7 @@ class Home extends React.Component<HomeProps, {}> {
               <Link to="/jx">技术分享</Link>
             </Menu.Item>
             <Menu.Item>
-              <Link to="/blog">生活点滴</Link>
-            </Menu.Item>
-            <Menu.Item>
-              <Link to="/blog">实用工具</Link>
+              <Link to="/blog">作品展</Link>
             </Menu.Item>
             <Menu.Item>
               <Link to="/blog">留言板</Link>
@@ -82,7 +79,6 @@ class Home extends React.Component<HomeProps, {}> {
           <Switch>
             <Route exact path="/" component={MainComponent} />
             <Route exact path="/jx" component={Jx} />
-            <Route exact path="/blog" component={Jx2} />
             <Route exact path="/article/:id" component={ArticleCom} />
           </Switch>
         </Layout.Content>
@@ -102,8 +98,6 @@ class Home extends React.Component<HomeProps, {}> {
 }
 
 const Jx = () => <div>技术分享</div>
-const Jx2 = () => <div>博客</div>
-
 
 function mapStatetoProps({ isLogin }) {
   return {

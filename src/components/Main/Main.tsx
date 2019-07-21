@@ -3,8 +3,8 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { fetchActicles } from "../../actions/articles";
-import { ArticleItem } from "./ArticleItem";
-import { ArticleListCom } from "./ArticleList";
+import { ArticleItem } from "../Articles/ArticleItem";
+import { ArticleListCom } from "../Articles/ArticleList";
 import { KeyWordTabsComponment } from "./KeyWordTags";
 import { SearchComponent } from "./Search";
 import { UserInfoComponent } from "./UserInfo";
@@ -44,10 +44,10 @@ class MainComponent extends React.Component<{dispatch?:Dispatch,articles?:IArtic
             />):<Spin />
           }
           <div className='side-info'>
-            <UserInfoComponent />
             <SearchComponent />
+            <UserInfoComponent />
             <KeyWordTabsComponment />
-          <ArticleListCom title="点击排行" />
+            <ArticleListCom title="点击排行" />
         </div>
       </div>
     )

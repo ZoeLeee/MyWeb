@@ -10,7 +10,7 @@ export  class UserInfoComponent extends React.Component {
             size={100}
             src={require('../../images/ava1.jpg')}
           />
-          <h2>Zoe</h2>
+          <h2>Joe</h2>
           <h4>Web前端开发工程师</h4>
           <div className="user-sign">
             不忘初心，方得始终。
