@@ -27,8 +27,8 @@ exports.config = {
           getCustomTransformers: () => ({
             before: [ tsImportPluginFactory( {
               libraryName: 'antd',
-              libraryDirectory: 'es',
-              style: 'css'
+              libraryDirectory: 'lib',
+              // style: 'css'
             }) ]
           }),
           compilerOptions: {

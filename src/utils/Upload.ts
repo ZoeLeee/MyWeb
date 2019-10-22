@@ -21,7 +21,8 @@ let files = getFiles(dir, []);
 let formData: any = {};
 
 for (let f of files) {
-    formData[f.substr(dir.length + 1)] = fs.createReadStream(f);
+    if(!f.endsWith(".map"))
+        formData[f.substr(dir.length + 1)] = fs.createReadStream(f);
 }
 
 const URL="http://www.dodream.top:3000/upload";
