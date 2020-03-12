@@ -105,7 +105,7 @@ export class Home extends React.Component<HomeProps, any> {
           </Switch>
         </Layout.Content>
         <Layout.Footer>
-          友情链接：1，2，3，4，5，6，Lorem ipsum dolor, sit amet consectetur adipisicing elit. Necessitatibus cumque, earum fugit esse, eum nam deleniti velit aliquam, reiciendis praesentium perferendis! Aliquam perferendis ad tempora commodi, officia omnis at nisi!
+         闽ICP备19012108号
         </Layout.Footer>
       </Layout>
     );
