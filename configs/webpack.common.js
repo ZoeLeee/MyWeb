@@ -28,7 +28,7 @@ exports.config = {
             before: [ tsImportPluginFactory( {
               libraryName: 'antd',
               libraryDirectory: 'lib',
-              // style: 'css'
+              style: 'css'
             }) ]
           }),
           compilerOptions: {

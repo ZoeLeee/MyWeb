@@ -2,7 +2,6 @@
  const protocol=location.protocol;
 
 export const CURRENT_HOST=protocol==="http"?"http://www.dodream.top:3000/":"https://www.dodream.top/api/";
-console.log('CURRENT_HOST: ', CURRENT_HOST);
 // export const CURRENT_HOST="http://127.0.0.1:3000/";
 
 export const ReqApi={
