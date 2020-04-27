@@ -13,7 +13,7 @@ exports.config = {
   output: {
     filename: '[hash].bundle.js',
     path: path.resolve(__dirname, '../dist/'),
-    publicPath: '/'
+    publicPath: '/blog/'
   },
   module: {
     rules: [
