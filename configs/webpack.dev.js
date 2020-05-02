@@ -3,10 +3,14 @@ const webpack=require('webpack');
 const common=require('./webpack.common').config;
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const merge=require('webpack-merge');
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 
 module.exports =merge(common,{
   mode: 'development',
   devtool: 'cheap-module-eval-source-map',
+  output: {
+    publicPath: '/'
+  },
   module: {
     rules: [
       //样式加载 css
@@ -53,5 +57,6 @@ module.exports =merge(common,{
       filename: '[name].css',
       chunkFilename: '[id].css',
     }),
+    new AddAssetHtmlPlugin({ filepath: './dist/dll.lib.js' }),
   ]
 });

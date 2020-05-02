@@ -6,10 +6,14 @@ const path = require('path');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 
 module.exports = merge(common, {
   mode: 'production',
   devtool: 'none',
+  output: {
+    publicPath: '/blog'
+  },
   module: {
     rules: [
        //样式加载 css
@@ -77,6 +81,7 @@ module.exports = merge(common, {
       filename: '[name].[hash].css',
       chunkFilename: '[id].[hash].css',
     }),
+    new AddAssetHtmlPlugin({ filepath: './dist/dll.lib.js' }),
     // new BundleAnalyzerPlugin({ analyzerPort: 8081 })
   ]
 });

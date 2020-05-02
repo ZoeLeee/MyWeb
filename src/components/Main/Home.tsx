@@ -1,7 +1,7 @@
 import { Layout, Menu } from 'antd';
 import * as React from 'react';
 import { connect } from "react-redux";
-import { Link, Route, Switch } from "react-router-dom";
+import { Link, Route, Switch, Redirect } from "react-router-dom";
 import { AppStatus } from '../..';
 import { getLoginStatus, loginOut } from '../../actions/login';
 import { IReduxProps } from '../App';
@@ -42,16 +42,16 @@ class Home extends React.Component<HomeProps, {}> {
             theme="light"
           >
             <Menu.Item>
-              <Link to="/">首页</Link>
+              <Link to="/blog">首页</Link>
             </Menu.Item>
             <Menu.Item>
               <Link to="/jx">技术分享</Link>
             </Menu.Item>
             <Menu.Item>
-              <Link to="/blog">作品展</Link>
+              <Link to="/project">作品展</Link>
             </Menu.Item>
             <Menu.Item>
-              <Link to="/blog">留言板</Link>
+              <Link to="/remarks">留言板</Link>
             </Menu.Item>
             {
               this.props.isLogin && AppStatus.isAdmin &&
@@ -77,18 +77,19 @@ class Home extends React.Component<HomeProps, {}> {
           }
         >
           <Switch>
-            <Route exact path="/" component={MainComponent} />
             <Route exact path="/jx" component={Jx} />
+            <Route exact path="/blog" component={MainComponent} />
             <Route exact path="/article/:id" component={ArticleCom} />
+            <Redirect from="/" to="/blog" />
           </Switch>
         </Layout.Content>
         <Layout.Footer
-        style={{
-          position: "fixed",
-          bottom: 0,
-          width: "100%",
-          zIndex: 10
-        }}
+          style={{
+            position: "fixed",
+            bottom: 0,
+            width: "100%",
+            zIndex: 10
+          }}
         >
           <a href="http://www.beian.miit.gov.cn/">闽ICP备19012108号</a>
         </Layout.Footer>
