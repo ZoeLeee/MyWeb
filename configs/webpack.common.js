@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
-
+const tsImportPluginFactory = require('ts-import-plugin');
 const loading = {
   html: fs.readFileSync(path.join(__dirname, '../src/load/loading.html')),
   css: '<style>' + fs.readFileSync(path.join(__dirname, '../src/load/loading.css')) + '</style>'
@@ -24,6 +24,16 @@ exports.config = {
         options: {
           transpileOnly: true,
           experimentalWatchApi: true,
+          getCustomTransformers: () => ({
+            before: [ tsImportPluginFactory( {
+              libraryName: 'antd',
+              libraryDirectory: 'lib',
+              style: 'css'
+            }) ]
+          }),
+          compilerOptions: {
+            module: 'es2015'
+          }
         }
       },
       {
@@ -55,7 +65,8 @@ exports.config = {
     new HtmlWebpackPlugin({
       title: 'Zoe',
       template: './index.html',
-      loading
+      loading,
+      favicon:path.resolve(__dirname,'../favicon.ico')
     }),
     new webpack.DllReferencePlugin({
       context: __dirname,

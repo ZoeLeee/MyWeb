@@ -3,10 +3,13 @@ const merge = require('webpack-merge');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require('path');
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = merge(common, {
   mode: 'production',
-  devtool: 'source-map',
+  devtool: 'none',
   module: {
     rules: [
        //样式加载 css
@@ -56,7 +59,15 @@ module.exports = merge(common, {
           reuseExistingChunk: true
         }
       }
-    }
+    },
+    minimizer:[
+      new UglifyJsPlugin({//压缩js
+          cache:true,
+          parallel:true,
+          sourceMap:true
+      }),
+      new OptimizeCssAssetsPlugin()//压缩css
+    ]
   },
   plugins: [
     new CleanWebpackPlugin(['./dist/*.bundle.js', './dist/*.map', './dist/*.css'], {
@@ -66,5 +77,6 @@ module.exports = merge(common, {
       filename: '[name].[hash].css',
       chunkFilename: '[id].[hash].css',
     }),
+    // new BundleAnalyzerPlugin({ analyzerPort: 8081 })
   ]
 });

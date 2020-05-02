@@ -1,10 +1,7 @@
-import fs = require("fs");
-import rq = require("request-promise-native");
-import path = require("path");
+const fs = require("fs");
+const rq = require("request-promise-native");
+const path = require("path");
 import { RequestStatus } from "./Request";
-import { ReqApi } from "./Default";
-
-
 export function getFiles(dir: string, files_: string[]) {
     files_ = files_ || [];
     let files = fs.readdirSync(dir);
@@ -24,9 +21,13 @@ let files = getFiles(dir, []);
 let formData: any = {};
 
 for (let f of files) {
-    formData[f.substr(dir.length + 1)] = fs.createReadStream(f);
+    if(!f.endsWith(".map"))
+        formData[f.substr(dir.length + 1)] = fs.createReadStream(f);
 }
-rq.post({ url:ReqApi.Upload, formData }, function optionalCallback(err, httpResponse, body) {
+
+const URL="http://www.dodream.top:3000/upload";
+
+rq.post({ url:URL, formData }, function optionalCallback(err, httpResponse, body) {
     if (err || !body || JSON.parse(body)['code'] !== RequestStatus.Ok)
         return console.error('部署失败!', err,body);
     else {

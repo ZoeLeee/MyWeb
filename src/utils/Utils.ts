@@ -31,3 +31,20 @@ export function formateDate(date: Date, fmt: string="yyyy-MM-dd")
     }
     return fmt;
 }
+
+const SCAN_IDS="scansId";
+
+export function saveScanIdAndIsUpdate(id:string){
+    let scanIds:string[]=[];
+    let exitIds=localStorage.getItem(SCAN_IDS);
+    if(exitIds){
+        scanIds=JSON.parse(exitIds);
+    }
+    let isUpdate=false;
+    if(!scanIds.includes(id)){
+        scanIds.push(id);
+        isUpdate=true;
+    }
+    localStorage.setItem(SCAN_IDS,JSON.stringify(scanIds));
+    return isUpdate;
+}

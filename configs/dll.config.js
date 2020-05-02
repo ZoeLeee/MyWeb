@@ -6,6 +6,9 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const vendors = [
     'react',
     'react-dom',
+    'react-router',
+    'react-router-dom',
+    'redux',
     // ...其它库
 ];
  
