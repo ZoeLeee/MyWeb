@@ -5,8 +5,8 @@ export enum RequestStatus {
   Other = 1,
 }
 
-export async function iFetch(url: string, data?: any, option?: any) {
-  let opt:any = {
+export async function iFetch(url: string, data?: RequestInit) {
+  let opt:RequestInit = {
     method: 'GET',
     mode: 'cors',
     redirect: 'follow',

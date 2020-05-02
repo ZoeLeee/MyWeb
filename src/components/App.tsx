@@ -48,4 +48,4 @@ class App extends React.Component {
   }
 }
 
-export default hot(App);
+ export default App;
