@@ -7,6 +7,7 @@ import { getLoginStatus, loginOut } from '../../actions/login';
 import { IReduxProps } from '../App';
 import ArticleCom from '../Articles/ArticleComponent';
 import MainComponent from './Main';
+import { ProjectComponent } from './../project/index';
 
 interface HomeProps extends IReduxProps {
   isLogin?: boolean,
@@ -45,9 +46,6 @@ class Home extends React.Component<HomeProps, {}> {
               <Link to="/blog">首页</Link>
             </Menu.Item>
             <Menu.Item>
-              <Link to="/jx">技术分享</Link>
-            </Menu.Item>
-            <Menu.Item>
               <Link to="/project">作品展</Link>
             </Menu.Item>
             <Menu.Item>
@@ -77,7 +75,8 @@ class Home extends React.Component<HomeProps, {}> {
           }
         >
           <Switch>
-            <Route exact path="/jx" component={Jx} />
+            <Route exact path="/project" component={ProjectComponent} />
+            <Route exact path="/remarks" component={Jx} />
             <Route exact path="/blog" component={MainComponent} />
             <Route exact path="/article/:id" component={ArticleCom} />
             <Redirect from="/" to="/blog" />
