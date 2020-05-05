@@ -12,7 +12,7 @@ module.exports = merge(common, {
   mode: 'production',
   devtool: 'none',
   output: {
-    publicPath: '/blog/'
+    publicPath: '/'
   },
   module: {
     rules: [

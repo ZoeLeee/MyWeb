@@ -43,7 +43,7 @@ class Home extends React.Component<HomeProps, {}> {
             theme="light"
           >
             <Menu.Item>
-              <Link to="/blog">首页</Link>
+              <Link to="/">首页</Link>
             </Menu.Item>
             <Menu.Item>
               <Link to="/project">作品展</Link>
@@ -75,11 +75,10 @@ class Home extends React.Component<HomeProps, {}> {
           }
         >
           <Switch>
+            <Route exact path="/" component={MainComponent} />
             <Route exact path="/project" component={ProjectComponent} />
             <Route exact path="/remarks" component={Jx} />
-            <Route exact path="/blog" component={MainComponent} />
             <Route exact path="/article/:id" component={ArticleCom} />
-            <Redirect from="/" to="/blog" />
           </Switch>
         </Layout.Content>
         <Layout.Footer
