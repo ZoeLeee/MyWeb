@@ -7,6 +7,7 @@ const loading = {
   html: fs.readFileSync(path.join(__dirname, '../src/load/loading.html')),
   css: '<style>' + fs.readFileSync(path.join(__dirname, '../src/load/loading.css')) + '</style>'
 }
+const resolve = dir => path.join(__dirname, dir);
 
 exports.config = {
   entry: path.join(__dirname, '../src/index.tsx'),
@@ -19,17 +20,20 @@ exports.config = {
     rules: [
       {
         test: /\.tsx?$/,
+        include: [ // 表示只解析以下目录，减少loader处理范围
+          resolve('../src'),
+        ],
         exclude: /node_modules/,
         loader: 'ts-loader',
         options: {
           transpileOnly: true,
           experimentalWatchApi: true,
           getCustomTransformers: () => ({
-            before: [ tsImportPluginFactory( {
+            before: [tsImportPluginFactory({
               libraryName: 'antd',
               libraryDirectory: 'lib',
               style: 'css'
-            }) ]
+            })]
           }),
           compilerOptions: {
             module: 'es2015'
@@ -58,7 +62,14 @@ exports.config = {
     ]
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".less", ".css"]
+    extensions: [".ts", ".tsx", ".js", ".less", ".css"],
+    modules: [ // 指定以下目录寻找第三方模块，避免webpack往父级目录递归搜索
+      resolve('../src'),
+      resolve('../node_modules'),
+    ],
+    alias: {
+      "@": resolve('../src'), // 缓存src目录为@符号，避免重复寻址
+    }
   },
   devtool: 'eval',
   plugins: [
@@ -66,7 +77,7 @@ exports.config = {
       title: 'Zoe',
       template: './index.html',
       loading,
-      favicon:path.resolve(__dirname,'../favicon.ico')
+      favicon: path.resolve(__dirname, '../favicon.ico')
     }),
     new webpack.DllReferencePlugin({
       context: __dirname,

@@ -5,8 +5,25 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require('path');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
+
+const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+const resolve = dir => path.join(__dirname, dir);
+
+const smp = new SpeedMeasurePlugin();
+const pgs = smp.wrap({
+  plugins: [
+    new CleanWebpackPlugin(['./dist/*.bundle.js', './dist/*.map', './dist/*.css'], {
+      root: path.resolve(__dirname, '../')
+    }),
+    new MiniCssExtractPlugin({
+      filename: '[name].[hash].css',
+      chunkFilename: '[id].[hash].css',
+    }),
+  ]
+})
 
 module.exports = merge(common, {
   mode: 'production',
@@ -16,14 +33,17 @@ module.exports = merge(common, {
   },
   module: {
     rules: [
-       //样式加载 css
-       {
+      //样式加载 css
+      {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader']
       },
       //样式加载 less
       {
         test: /\.less$/,
+        include: [ // 表示只解析以下目录，减少loader处理范围
+          resolve('../src'),
+        ],
         use: [MiniCssExtractPlugin.loader,
         { loader: 'css-loader', options: { sourceMap: false } },
         {
@@ -46,7 +66,7 @@ module.exports = merge(common, {
   optimization: {
     splitChunks: {
       chunks: 'all',
-      minSize: 244*1024,
+      minSize: 244 * 1024,
       minChunks: 1,
       maxAsyncRequests: 5,
       maxInitialRequests: 3,
@@ -64,24 +84,28 @@ module.exports = merge(common, {
         }
       }
     },
-    minimizer:[
-      new UglifyJsPlugin({//压缩js
-          cache:true,
-          parallel:true,
-          sourceMap:true
+    minimizer: [
+      new ParallelUglifyPlugin({
+        cacheDir: '.cache/',
+        uglifyJS: {
+          output: {
+            beautify: false,
+            comments: false
+          },
+          warnings: false,
+          compress: {
+            drop_console: true,
+            collapse_vars: true,
+            reduce_vars: true
+          }
+        }
       }),
       new OptimizeCssAssetsPlugin()//压缩css
     ]
   },
   plugins: [
-    new CleanWebpackPlugin(['./dist/*.bundle.js', './dist/*.map', './dist/*.css'], {
-      root: path.resolve(__dirname, '../')
-    }),
-    new MiniCssExtractPlugin({
-      filename: '[name].[hash].css',
-      chunkFilename: '[id].[hash].css',
-    }),
+    new ProgressBarPlugin({ format: 'build [:bar] :percent (:elapsed seconds)',clear: false}),
     new AddAssetHtmlPlugin({ filepath: './dist/dll.lib.js' }),
     // new BundleAnalyzerPlugin({ analyzerPort: 8081 })
   ]
-});
+},pgs);
