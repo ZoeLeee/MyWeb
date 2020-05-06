@@ -4,6 +4,7 @@ const common=require('./webpack.common').config;
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const merge=require('webpack-merge');
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 
 module.exports =merge(common,{
   mode: 'development',
@@ -51,6 +52,7 @@ module.exports =merge(common,{
     hot:true
   },
   plugins: [
+    new ProgressBarPlugin({ format: 'build [:bar] :percent (:elapsed seconds)',clear: false}),
     new webpack.NamedModulesPlugin(),//Hot
     new webpack.HotModuleReplacementPlugin(),//Hot
     new MiniCssExtractPlugin({
