@@ -55,7 +55,6 @@ class EditorCom extends React.Component<IReduxProps, IEditorState> {
   constructor(props) {
     super(props);
     let state = this.props.history.location.state;
-    console.log('state: ', state);
     this.isUpdate = Boolean(state);
     if (state)
       this.id = state.id;
@@ -64,7 +63,6 @@ class EditorCom extends React.Component<IReduxProps, IEditorState> {
       content: state ? state.content : '',
       scanCount: "0",
       tag:state?state.tag:[],
-      time: "",
       redirect: false
     }
   }
@@ -72,9 +70,6 @@ class EditorCom extends React.Component<IReduxProps, IEditorState> {
     this.setState({ content: value })
   }
   handleClick = () => {
-    this.setState({
-      time: formateDate(new Date())
-    })
     if (this.isUpdate) {
       let id = this.id;
       let newData = {

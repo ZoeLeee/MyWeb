@@ -70,7 +70,7 @@ class Home extends React.Component<HomeProps, {}> {
         <Layout.Content
           style={
             {
-              marginTop: "64px",
+              margin: "64px 0",
             }
           }
         >
