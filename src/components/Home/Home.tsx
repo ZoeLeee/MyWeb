@@ -6,8 +6,10 @@ import { AppStatus } from '../..';
 import { getLoginStatus, loginOut } from '../../actions/login';
 import { IReduxProps } from '../App';
 import ArticleCom from '../Articles/ArticleComponent';
-import MainComponent from './Main';
-import { ProjectComponent } from './../project/index';
+import MainComponent from '../Main/Main';
+import { ProjectComponent } from '../project/index';
+import './index.less';
+
 
 interface HomeProps extends IReduxProps {
   isLogin?: boolean,
@@ -28,13 +30,7 @@ class Home extends React.Component<HomeProps, {}> {
   public render() {
     return (
       <Layout>
-        <Layout.Header
-          style={{
-            position: "fixed",
-            top: 0,
-            width: "100%",
-            zIndex: 10
-          }}>
+        <Layout.Header>
           <h3 className='logo'>
             Joe个人网站
               </h3>
@@ -67,13 +63,7 @@ class Home extends React.Component<HomeProps, {}> {
 
           </Menu>
         </Layout.Header>
-        <Layout.Content
-          style={
-            {
-              margin: "64px 0",
-            }
-          }
-        >
+        <Layout.Content>
           <Switch>
             <Route exact path="/" component={MainComponent} />
             <Route exact path="/project" component={ProjectComponent} />
@@ -81,14 +71,7 @@ class Home extends React.Component<HomeProps, {}> {
             <Route exact path="/article/:id" component={ArticleCom} />
           </Switch>
         </Layout.Content>
-        <Layout.Footer
-          style={{
-            position: "fixed",
-            bottom: 0,
-            width: "100%",
-            zIndex: 10
-          }}
-        >
+        <Layout.Footer >
           <a href="http://www.beian.miit.gov.cn/">闽ICP备19012108号</a>
         </Layout.Footer>
       </Layout>

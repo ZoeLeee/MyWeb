@@ -6,7 +6,7 @@ import thunk from 'redux-thunk';
 import { appReducer } from '../reducers';
 import { IEditorState } from './Editor';
 import Login from './Login/Login';
-import Home from './Main/Home';
+import Home from './Home/Home';
 import Register from './Register/Register';
 import { History } from 'history';
 import EditorCom from './Editor';
