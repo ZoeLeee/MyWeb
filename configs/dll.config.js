@@ -28,6 +28,6 @@ module.exports = {
             name: 'dll',
             context: __dirname,
         }),
-        new CleanWebpackPlugin([`./dist/*.dll.js`,`./dist/*.json`], { root: path.resolve(__dirname, "../") }),
+        new CleanWebpackPlugin([`./dist/dll.*.js`,`./dist/*.json`], { root: path.resolve(__dirname, "../") }),
     ]
   }

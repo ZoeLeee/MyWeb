@@ -1,4 +1,9 @@
-import { Card, Icon } from "antd";
+import { Card } from "antd";
+import {
+  PaperClipOutlined,
+  ClockCircleOutlined,
+  EyeOutlined
+} from '@ant-design/icons';
 import { Meta } from "antd/lib/list/Item";
 import * as React from "react";
 import { Link } from "react-router-dom";
@@ -23,16 +28,16 @@ export class ArticleItem extends React.Component<IArticleOption,{}> {
           <ul className="list-unstyle-inline">
             <li>
               <a href="">
-                <Icon type="paper-clip" theme="outlined" />
+                <PaperClipOutlined />
                 {this.props.tag.join("|")}
               </a>
             </li>
             <li>
-              <Icon type="clock-circle" theme="outlined" />
+            <ClockCircleOutlined />
               <span>{this.props.time}</span>
             </li>
             <li>
-              <Icon type="eye" theme="outlined" />
+            <EyeOutlined />
               <span>
                 浏览（{this.props.scanCount}）
               </span>
