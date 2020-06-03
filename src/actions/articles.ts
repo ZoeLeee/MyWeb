@@ -1,6 +1,6 @@
 import { IArticleOption } from "../components/Main/Main";
 import { iFetch, RequestStatus } from "../utils/Request";
-import { ReqApi } from "../utils/Default";
+import { ReqApi } from "../utils/Host";
 import { GET_ARTICLES, SHOW_ARTICLE } from ".";
 import { saveScanIdAndIsUpdate } from "../utils/Utils";
 

@@ -1,6 +1,6 @@
 import { SET_LOGIN } from ".";
 import { iFetch, RequestStatus } from "../utils/Request";
-import { ReqApi } from "../utils/Default";
+import { ReqApi } from "../utils/Host";
 
 const setLogin=(isLogin:boolean)=>{
   return {
@@ -20,10 +20,9 @@ export const loginOut:any =()=>dispatch=>{
   })
 }
 
-export interface ISignOPtion{
+export interface ISignOPtion extends RequestInit{
   uname:string;
   pwd:string;
-  [key:string]:string;
 }
 
 export const login:any=(data:ISignOPtion)=>dispatch=>{
