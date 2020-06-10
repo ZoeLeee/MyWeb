@@ -59,6 +59,5 @@ module.exports =merge(common,{
       filename: '[name].css',
       chunkFilename: '[id].css',
     }),
-    new AddAssetHtmlPlugin({ filepath: './dist/dll.lib.js' }),
   ]
 });

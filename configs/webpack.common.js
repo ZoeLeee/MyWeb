@@ -3,6 +3,9 @@ const fs = require('fs');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const tsImportPluginFactory = require('ts-import-plugin');
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
+
+
 const loading = {
   html: fs.readFileSync(path.join(__dirname, '../src/load/loading.html')),
   css: '<style>' + fs.readFileSync(path.join(__dirname, '../src/load/loading.css')) + '</style>'
@@ -82,6 +85,12 @@ exports.config = {
     new webpack.DllReferencePlugin({
       context: __dirname,
       manifest: require('../dist/manifest.json'),
-    })
+    }),
+    new AddAssetHtmlPlugin(
+      { filepath: './dist/dll.react.js' },
+    ),
+    // new AddAssetHtmlPlugin(
+    //   { filepath: './dist/dll.editor.js' },
+    // ),
   ]
 };

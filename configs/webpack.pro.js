@@ -5,7 +5,6 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require('path');
 //const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 
 const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
 const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
@@ -105,7 +104,6 @@ module.exports = merge(common, {
   },
   plugins: [
     // new ProgressBarPlugin({ format: 'build [:bar] :percent (:elapsed seconds)',clear: false}),
-    new AddAssetHtmlPlugin({ filepath: './dist/dll.lib.js' }),
     new CleanWebpackPlugin(['./dist/*.bundle.js', './dist/*.map', './dist/*.css'], {
       root: path.resolve(__dirname, '../')
     }),
