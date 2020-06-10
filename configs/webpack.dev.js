@@ -8,7 +8,7 @@ const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 
 module.exports =merge(common,{
   mode: 'development',
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'eval',
   output: {
     publicPath: '/'
   },

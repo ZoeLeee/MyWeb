@@ -47,11 +47,6 @@ class ArticleCom extends React.Component<IArticleProps, {}> {
         <div
           className="ql-editor"
           dangerouslySetInnerHTML={{ __html: this.props.article.content }}></div>
-        {
-          AppStatus.isAdmin && <div style={{ textAlign: "right" }}>
-            <Button onClick={this.editorArtice} type="primary">编辑</Button>
-            <Button onClick={this.deleteArticle} type="primary">删除</Button>
-          </div>}
         </div>
       </Card>
     )

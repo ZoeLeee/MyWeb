@@ -9,7 +9,6 @@ import Login from './Login/Login';
 import Home from './Home/Home';
 import Register from './Register/Register';
 import { History } from 'history';
-import EditorCom from './Editor';
 
 
 export interface IReduxProps{
@@ -37,7 +36,6 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
-            <Route exact path="/editor" component={EditorCom} />
             <Route path="/"   component={Home} />
             <Route component={NotMatchCom} />
           </Switch>

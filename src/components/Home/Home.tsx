@@ -47,20 +47,6 @@ class Home extends React.Component<HomeProps, {}> {
             <Menu.Item>
               <Link to="/remarks">留言板</Link>
             </Menu.Item>
-            {
-              this.props.isLogin && AppStatus.isAdmin &&
-              <Menu.Item>
-                <Link to="/editor">发表</Link>
-              </Menu.Item>
-            }
-            {
-              !this.props.isLogin ? <Menu.Item>
-                <Link to="/login">登陆</Link>
-              </Menu.Item> : <Menu.Item>
-                  <a onClick={this.loginout} href="javascript:;">退出登陆</a>
-                </Menu.Item>
-            }
-
           </Menu>
         </Layout.Header>
         <Layout.Content>
