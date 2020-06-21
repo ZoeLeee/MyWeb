@@ -47,7 +47,7 @@ module.exports =merge(common,{
     historyApiFallback: true,
     contentBase: path.resolve(__dirname, "../dist/"),
     compress: true,
-    port: 8080,
+    port:8080,
     // host: '0.0.0.0',
     hot:true
   },

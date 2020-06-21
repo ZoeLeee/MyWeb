@@ -32,7 +32,8 @@ export const fetchActicles:any = () => dispatch => {
           content: div.innerText,
           time: art.time,
           scanCount: art.scanCount,
-          tag: art.tag
+          tag: art.tag,
+          imgUrl:art.imgUrl||""
         })
       }
       dispatch(getArticles(articles));
@@ -43,7 +44,7 @@ export const fetchActicles:any = () => dispatch => {
 
 
 export const fetchArticleData:any=(id:string)=>dispatch=>{
-  return iFetch(ReqApi.Article+'/'+id).then(data=>{
+  return iFetch(ReqApi.Article+'?id='+id).then(data=>{
     if(data.code===RequestStatus.Ok){
       let newData=data.data[0];
       dispatch(showArticle(newData));

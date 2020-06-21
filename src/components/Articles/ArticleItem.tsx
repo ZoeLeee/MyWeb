@@ -8,6 +8,9 @@ import { Meta } from "antd/lib/list/Item";
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { IArticleOption } from "../Main/Main";
+
+const IMG_URL="https://www.dodream.wang";
+
 export class ArticleItem extends React.Component<IArticleOption,{}> {
 
   render() {
@@ -15,7 +18,7 @@ export class ArticleItem extends React.Component<IArticleOption,{}> {
       <Card>
         <div className="article-li">
           <div>
-            <img src={require('../../images/zd03.jpg')} alt="" />
+            <img src={this.props.imgUrl?(IMG_URL+this.props.imgUrl):require('../../images/zd03.jpg')} alt="" />
           </div>
           <Link  to={"/article/"+this.props.id}>
             <Meta
