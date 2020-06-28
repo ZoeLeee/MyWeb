@@ -32,7 +32,7 @@ class Home extends React.Component<HomeProps, {}> {
       <Layout>
         <Layout.Header>
           <h3 className='logo'>
-            DoDream123
+            Do Dream
               </h3>
           <Menu
             mode="horizontal"
