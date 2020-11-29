@@ -11,22 +11,21 @@ import Register from './Register/Register';
 import { History } from 'history';
 
 
-export interface IReduxProps{
-  history:History;
-  dispatch:Dispatch;
+export interface IReduxProps {
+  history: History;
+  dispatch: Dispatch;
 }
 
 export const articleMap: Map<string, IEditorState> = new Map();
-const NotMatchCom = () => <div>404</div>
 
-const initialState={
-  isLogin:false,
-  articles:[],
-  article:{title:"",content:""},
-  tags:[],
-}
+const initialState = {
+  isLogin: false,
+  articles: [],
+  article: { title: "", content: "" },
+  tags: [],
+};
 
-let store = createStore(appReducer,initialState, applyMiddleware(thunk));
+let store = createStore(appReducer, initialState, applyMiddleware(thunk));
 
 class App extends React.Component {
   render() {
@@ -36,13 +35,12 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
-            <Route path="/"   component={Home} />
-            <Route component={NotMatchCom} />
+            <Route path="/" component={Home} />
           </Switch>
         </Router>
       </Provider>
-    )
+    );
   }
 }
 
- export default App;
+export default App;

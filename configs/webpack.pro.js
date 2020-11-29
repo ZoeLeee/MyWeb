@@ -22,7 +22,7 @@ const pgs = smp.wrap({
       chunkFilename: '[id].[hash].css',
     }),
   ]
-})
+});
 
 module.exports = merge(common, {
   mode: 'production',

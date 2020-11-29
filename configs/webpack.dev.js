@@ -1,16 +1,19 @@
 const path = require('path');
-const webpack=require('webpack');
-const common=require('./webpack.common').config;
+const webpack = require('webpack');
+const common = require('./webpack.common').config;
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const merge=require('webpack-merge');
+const merge = require('webpack-merge');
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 
-module.exports =merge(common,{
+module.exports = merge(common, {
   mode: 'development',
-  devtool: 'eval',
+  devtool: 'eval-cheap-source-map',
   output: {
     publicPath: '/'
+  },
+  stats: {
+    assets: false,
   },
   module: {
     rules: [
@@ -47,12 +50,12 @@ module.exports =merge(common,{
     historyApiFallback: true,
     contentBase: path.resolve(__dirname, "../dist/"),
     compress: true,
-    port:8080,
+    port: 8080,
     // host: '0.0.0.0',
-    hot:true
+    hot: true
   },
   plugins: [
-    new ProgressBarPlugin({ format: 'build [:bar] :percent (:elapsed seconds)',clear: false}),
+    new ProgressBarPlugin({ format: 'build [:bar] :percent (:elapsed seconds) [:msg]', clear: false }),
     new webpack.NamedModulesPlugin(),//Hot
     new webpack.HotModuleReplacementPlugin(),//Hot
     new MiniCssExtractPlugin({
