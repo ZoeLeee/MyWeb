@@ -1,15 +1,14 @@
 import { Layout, Tree } from 'antd';
-import { ClickParam } from 'antd/lib/menu';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { ProjectApi } from '../../utils/Host';
 import { iFetch, RequestStatus } from '../../utils/Request';
-import { ProjectList } from './../../components/ProjectList/index';
+import { ProjectList, IProjectOption } from './../../components/ProjectList/index';
 import './index.less';
 import { Spin } from 'antd';
 import ProjectDetailPanel from './../../components/projectDetail/index';
 import { RouterProps } from 'react-router';
-import { ProjectOutlined, FolderOutlined, DownOutlined } from '@ant-design/icons';
+import { DownOutlined } from '@ant-design/icons';
 
 const { Content, Sider } = Layout;
 
@@ -34,8 +33,7 @@ export function ProjectComponent(props: RouterProps) {
   const [projectList, setProjectList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingProject, setLoadingProject] = useState(false);
-  const [currentProjectId, setCurrentProjectId] = useState("");
-  const [selectKey, setSelectKey] = useState("");
+  const [project, setProject] = useState<IProjectOption>(null);
 
   const updateNodes = (categorys: ICategorys[], isLeaf = false) => {
     let nodes: IProjectMenu[] = [];
@@ -56,7 +54,6 @@ export function ProjectComponent(props: RouterProps) {
     if (data.code === RequestStatus.Ok) {
       let categorys = data.data;
       let list = updateNodes(categorys);
-      console.log('list: ', list);
       firstKey = getFirstKey(list);
       if (firstKey)
         getProject(firstKey);
@@ -74,12 +71,8 @@ export function ProjectComponent(props: RouterProps) {
     setLoadingProject(false);
   };
   const onSelect = (keys, event) => {
-    setCurrentProjectId("");
+    setProject(null);
     getProject(event.node.key);
-  };
-  const clickMunu = (param: ClickParam) => {
-    setCurrentProjectId("");
-    getProject(param.key);
   };
 
   function getFirstKey(list: IProjectMenu[]) {
@@ -114,7 +107,6 @@ export function ProjectComponent(props: RouterProps) {
           onSelect={onSelect}
           onExpand={onExpand}
           treeData={list}
-          // icon={<ProjectOutlined />}
           switcherIcon={<DownOutlined />}
         />
       </Sider>
@@ -129,7 +121,7 @@ export function ProjectComponent(props: RouterProps) {
         >
           {
             loadingProject ? <Spin /> : (
-              currentProjectId ? <ProjectDetailPanel id={currentProjectId} /> : <ProjectList setProjectId={setCurrentProjectId} data={projectList} />
+              project ? <ProjectDetailPanel project={project} /> : <ProjectList setProjectId={setProject} data={projectList} />
             )
           }
         </Content>

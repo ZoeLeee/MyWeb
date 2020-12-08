@@ -3,10 +3,11 @@ const merge = require('webpack-merge');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require('path');
-//const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
 const resolve = dir => path.join(__dirname, dir);
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
@@ -83,20 +84,22 @@ module.exports = merge(common, {
         }
       }
     },
+    minimize: true,
     minimizer: [
-      new ParallelUglifyPlugin({
-        cacheDir: '.cache/',
-        uglifyJS: {
-          output: {
-            beautify: false,
-            comments: false
-          },
+      new TerserPlugin({
+        terserOptions: {
+          ecma: 5,
           warnings: false,
-          compress: {
-            drop_console: true,
-            collapse_vars: true,
-            reduce_vars: true
-          }
+          parse: {},
+          compress: {},
+          mangle: true, // Note `mangle.properties` is `false` by default.
+          module: false,
+          output: null,
+          toplevel: false,
+          nameCache: null,
+          ie8: false,
+          keep_fnames: false,
+          safari10: true
         }
       }),
       new OptimizeCssAssetsPlugin()//压缩css
@@ -111,6 +114,6 @@ module.exports = merge(common, {
       filename: '[name].[hash].css',
       chunkFilename: '[id].[hash].css',
     }),
-    // new BundleAnalyzerPlugin({ analyzerPort: 8081 })
+    new BundleAnalyzerPlugin({ analyzerPort: 8088 })
   ]
 });

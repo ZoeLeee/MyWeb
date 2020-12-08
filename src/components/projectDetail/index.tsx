@@ -1,22 +1,28 @@
 import React from 'react';
-import { Tabs } from 'antd';
+import { Tabs, Spin, Empty } from 'antd';
 import './index.less';
+import { IProjectOption } from '../ProjectList';
 
 const { TabPane } = Tabs;
 
 
-function callback(key) {
-    console.log(key);
-}
-
-export default function ProjectDetailPanel(props: { id: string; }) {
+export default function ProjectDetailPanel(props: { project: IProjectOption; }) {
+    if (!props.project)
+        return <Spin />;
     return (
-        <Tabs className="project-detail" defaultActiveKey="1" onChange={callback} >
+        <Tabs className="project-detail" defaultActiveKey="1">
             <TabPane tab="项目详情" key="1">
-                Content of Tab Pane 1
+                <div dangerouslySetInnerHTML={{ __html: props.project.content }}>
+
+                </div>
             </TabPane>
             <TabPane tab="项目展示" key="2">
-                <iframe src="https://www.dodream.wang/project/village/dist/" width="100%" height="100%" frameBorder={0} scrolling="auto"></iframe>
+                {
+                    props.project.showUrl ?
+                        <iframe src={props.project.showUrl} width="100%" height="100%" frameBorder={0} scrolling="auto"></iframe> :
+                        <Empty />
+                }
+
             </TabPane>
         </Tabs>
     );

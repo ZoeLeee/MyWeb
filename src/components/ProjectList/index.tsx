@@ -13,21 +13,23 @@ export interface IProjectOption {
     imgUrl: string;
     github: string;
     gitee: string;
+    showUrl: string;
+    description: string;
 }
 
 interface IProjectListProps {
     data: IProjectOption[];
-    setProjectId: Function;
+    setProjectId: (opt: IProjectOption) => void;
 }
 
 export function ProjectList(props: IProjectListProps) {
     const { data } = props;
 
-    const click = (e: React.MouseEvent<HTMLDivElement>) => {
+    const click = (e: React.MouseEvent<HTMLDivElement>, project: IProjectOption) => {
         let el = e.currentTarget as HTMLDivElement;
         let key = el.getAttribute("data-key");
         e.stopPropagation();
-        props.setProjectId(key);
+        props.setProjectId(project);
     };
 
     return (
@@ -38,15 +40,17 @@ export function ProjectList(props: IProjectListProps) {
                         className="project-item"
                         data-key={d._id}
                         key={d._id}
-                        onClick={click}
+                        onClick={(e) => click(e, d)}
                     >
-                        <img src={d.imgUrl || "http://cdn.dodream.top/projectDefault.jpg?key=joelee"} alt="" />
+                        <img src={d.imgUrl ? ("https://www.dodream.wang" + d.imgUrl) : "http://cdn.dodream.top/projectDefault.jpg?key=joelee"} alt="" />
                         <p>
                             {d.title}
                         </p>
                         <p>
-                            简介位
-                    </p>
+                            {
+                                d.description
+                            }
+                        </p>
                     </Card>)
             }
 

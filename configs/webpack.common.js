@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const tsImportPluginFactory = require('ts-import-plugin');
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
-
+const WebpackBar = require('webpackbar');
 
 const loading = {
   html: fs.readFileSync(path.join(__dirname, '../src/load/loading.html')),
@@ -46,20 +46,19 @@ exports.config = {
     rules: [
       {
         test: /\.tsx?$/,
-        include: [ // 表示只解析以下目录，减少loader处理范围
-          resolve('../src'),
-        ],
         exclude: /node_modules/,
         loader: 'ts-loader',
         options: {
           transpileOnly: true,
           experimentalWatchApi: true,
           getCustomTransformers: () => ({
-            before: [tsImportPluginFactory({
-              libraryName: 'antd',
-              libraryDirectory: 'lib',
-              style: 'css'
-            })]
+            before: [
+              tsImportPluginFactory({
+                libraryName: 'antd',
+                libraryDirectory: 'lib',
+                style: 'css'
+              }),
+            ]
           }),
           compilerOptions: {
             module: 'es2015'
@@ -112,8 +111,6 @@ exports.config = {
     new AddAssetHtmlPlugin(
       { filepath: './dist/dll.react.js' },
     ),
-    // new AddAssetHtmlPlugin(
-    //   { filepath: './dist/dll.editor.js' },
-    // ),
+    new WebpackBar(),
   ]
 };
