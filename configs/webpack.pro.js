@@ -114,6 +114,6 @@ module.exports = merge(common, {
       filename: '[name].[hash].css',
       chunkFilename: '[id].[hash].css',
     }),
-    new BundleAnalyzerPlugin({ analyzerPort: 8088 })
+    // new BundleAnalyzerPlugin({ analyzerPort: 8088 })
   ]
 });
