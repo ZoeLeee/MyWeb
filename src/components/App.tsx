@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { applyMiddleware, createStore, Dispatch } from 'redux';
 import thunk from 'redux-thunk';
 import { appReducer } from '../reducers';
-import { IEditorState } from './Editor';
 import Login from './Login/Login';
 import Home from './Home/Home';
 import Register from './Register/Register';
@@ -16,13 +15,11 @@ export interface IReduxProps {
   dispatch: Dispatch;
 }
 
-export const articleMap: Map<string, IEditorState> = new Map();
-
 const initialState = {
   isLogin: false,
   articles: [],
   article: { title: "", content: "" },
-  tags: [],
+  // tags: [],
 };
 
 let store = createStore(appReducer, initialState, applyMiddleware(thunk));

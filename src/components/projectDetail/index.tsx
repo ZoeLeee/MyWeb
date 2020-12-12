@@ -1,7 +1,7 @@
 import React from 'react';
 import { Tabs, Spin, Empty } from 'antd';
-import './index.less';
 import { IProjectOption } from '../ProjectList';
+require('./index.less');
 
 const { TabPane } = Tabs;
 

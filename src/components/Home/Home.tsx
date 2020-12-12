@@ -9,7 +9,7 @@ import { IReduxProps } from '../App';
 import ArticleCom from '../Articles/ArticleComponent';
 import MainComponent from '../Main/Main';
 import { ProjectComponent } from '../../containers/Project/index';
-import './index.less';
+require('./index.less');
 import NoMatch from './../NoMatch/index';
 
 

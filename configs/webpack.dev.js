@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const common = require('./webpack.common').config;
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 // const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 
@@ -12,37 +12,48 @@ module.exports = merge(common, {
   output: {
     publicPath: '/'
   },
-  stats: {
-    assets: true,
-  },
+  // stats: {
+  //   assets: true,
+  // },
   module: {
     rules: [
       //样式加载 css
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader']
+        use: [
+          {
+            loader: "style-loader"
+          },
+          {
+            loader: 'css-loader'
+          }
+        ]
       },
       //样式加载 less
       {
         test: /\.less$/,
-        exclude: /node_modules/,
-        use: [{
-          loader: "style-loader"
-        },
-        { loader: 'css-loader', options: { sourceMap: false } },
-        {
-          loader: "less-loader",
-          options: {
-            modifyVars: {
-              'primary-color': '#1DA57A',
-              'link-color': '#1DA57A',
-              'border-radius-base': '2px',
-            },
-            strictMath: true,
-            noIeCompat: true,
-            javascriptEnabled: true,
+        use: [
+          {
+            loader: "style-loader"
           },
-        }
+          {
+            loader: 'css-loader', options: { sourceMap: false }
+          },
+          {
+            loader: "less-loader",
+            options: {
+              lessOptions: {
+                modifyVars: {
+                  'primary-color': '#1DA57A',
+                  'link-color': '#1DA57A',
+                  'border-radius-base': '2px',
+                },
+                strictMath: false,
+                noIeCompat: true,
+                javascriptEnabled: true,
+              },
+            },
+          }
         ]
       },
     ]
@@ -52,19 +63,13 @@ module.exports = merge(common, {
   // },
   devServer: {
     historyApiFallback: true,
-    contentBase: path.resolve(__dirname, "../dist/"),
-    compress: true,
+    // contentBase: "../dist/",
+    // compress: true,
     port: 8080,
     // host: '0.0.0.0',
-    hot: true
+    // hot: true
   },
   plugins: [
-    // new ProgressBarPlugin({ format: 'build [:bar] :percent (:elapsed seconds) [:msg]', clear: false }),
-    new webpack.NamedModulesPlugin(),//Hot
-    new webpack.HotModuleReplacementPlugin(),//Hot
-    new MiniCssExtractPlugin({
-      filename: '[name].css',
-      chunkFilename: '[id].css',
-    }),
+    // new webpack.HotModuleReplacementPlugin(),//Hot
   ]
 });
