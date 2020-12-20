@@ -63,13 +63,13 @@ module.exports = merge(common, {
   // },
   devServer: {
     historyApiFallback: true,
-    // contentBase: "../dist/",
-    // compress: true,
+    static: path.join(__dirname, "../dist/"),
+    compress: true,
     port: 8080,
     // host: '0.0.0.0',
-    // hot: true
+    hot: true
   },
   plugins: [
-    // new webpack.HotModuleReplacementPlugin(),//Hot
+    new webpack.HotModuleReplacementPlugin(),//Hot
   ]
 });

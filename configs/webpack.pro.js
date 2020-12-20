@@ -4,12 +4,13 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const path = require('path');
 var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = merge(common, {
   mode: 'production',
-  devtool: 'cheap-source-map',
+  devtool: false,
   output: {
     publicPath: '/'
   },
@@ -44,6 +45,38 @@ module.exports = merge(common, {
         ]
       },
     ]
+  },
+  optimization: {
+    minimize: true,
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          chunks: 'all',
+          name: 'commons'
+        }
+      },
+      //最小的文件大小 超过之后将不予打包
+      minSize: {
+        javascript: 1024 * 500,
+        style: 1024 * 500
+      },
+      //最大的文件 超过之后继续拆分
+      maxSize: {
+        javascript: 1024 * 1024, //故意写小的效果更明显
+        style: 3000
+      }
+    },
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          format: {
+            comments: false,
+          },
+        },
+        extractComments: false,
+      }),
+      new OptimizeCssAssetsPlugin(),
+    ],
   },
   plugins: [
     new CleanWebpackPlugin({
