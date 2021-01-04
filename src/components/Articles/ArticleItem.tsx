@@ -31,8 +31,12 @@ export class ArticleItem extends React.Component<IArticleOption, {}> {
           <ul className="list-unstyle-inline">
             <li>
               <a href="">
-                <PaperClipOutlined />
-                {this.props.tag.join("|")}
+                {
+                  this.props.tag.length > 0 && <>
+                    <PaperClipOutlined />
+                    {this.props.tag.join("|")}
+                  </>
+                }
               </a>
             </li>
             <li>

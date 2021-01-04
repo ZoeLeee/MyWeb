@@ -9,8 +9,8 @@ import { IReduxProps } from '../App';
 import ArticleCom from '../Articles/ArticleComponent';
 import MainComponent from '../Main/Main';
 import { ProjectComponent } from '../../containers/Project/index';
-require('./index.less');
 import NoMatch from './../NoMatch/index';
+require('./index.less');
 
 
 interface HomeProps extends IReduxProps {

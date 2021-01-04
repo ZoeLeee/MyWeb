@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react';
 import { ProjectApi } from '../../utils/Host';
 import { iFetch, RequestStatus } from '../../utils/Request';
 import { ProjectList, IProjectOption } from './../../components/ProjectList/index';
-import './index.less';
 import { Spin } from 'antd';
 import ProjectDetailPanel from './../../components/projectDetail/index';
 import { RouterProps } from 'react-router';
 import { DownOutlined } from '@ant-design/icons';
+require('./index.less');
 
 const { Content, Sider } = Layout;
 
