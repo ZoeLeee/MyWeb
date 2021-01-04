@@ -1,7 +1,7 @@
 
 const webpack = require('webpack');
-const path=require('path');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const vendors = [
     'react',
@@ -11,11 +11,11 @@ const vendors = [
     'redux',
     // ...其它库
 ];
- 
+
 module.exports = {
-    mode:"production",
+    mode: "production",
     output: {
-        path:path.resolve(__dirname, '../dist'),
+        path: path.resolve(__dirname, '../dist'),
         filename: 'dll.[name].js',
         library: 'dll_[name]',
     },
@@ -25,10 +25,15 @@ module.exports = {
     },
     plugins: [
         new webpack.DllPlugin({
-            path:path.resolve(__dirname,'../dist/manifest.json'),
+            path: path.resolve(__dirname, '../dist/manifest.json'),
             name: 'dll_[name]',
             context: __dirname,
         }),
-        new CleanWebpackPlugin([`./dist/dll.*.js`,`./dist/*.json`], { root: path.resolve(__dirname, "../") }),
+        new CleanWebpackPlugin({
+            cleanOnceBeforeBuildPatterns: [
+                path.resolve(__dirname, "../dist/dll.*.js"),
+                path.resolve(__dirname, "../dist/dll.*.json"),
+            ]
+        })
     ]
-  }
+};

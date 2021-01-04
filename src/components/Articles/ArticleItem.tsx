@@ -9,21 +9,21 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import { IArticleOption } from "../Main/Main";
 
-const IMG_URL="https://www.dodream.wang";
+const IMG_URL = "https://www.dodream.wang";
 
-export class ArticleItem extends React.Component<IArticleOption,{}> {
+export class ArticleItem extends React.Component<IArticleOption, {}> {
 
   render() {
     return (
       <Card>
         <div className="article-li">
           <div>
-            <img src={this.props.imgUrl?(IMG_URL+this.props.imgUrl):require('../../images/zd03.jpg')} alt="" />
+            <img src={this.props.imgUrl ? (IMG_URL + this.props.imgUrl) : require('../../images/zd03.jpg')} alt="" />
           </div>
-          <Link  to={"/article/"+this.props.id}>
+          <Link to={"/article/" + this.props.id}>
             <Meta
               title={this.props.title}
-              description={this.props.content.substr(0,100)+"..."}
+              description={this.props.content.substr(0, 100) + "..."}
             />
           </Link>
         </div>
@@ -36,19 +36,19 @@ export class ArticleItem extends React.Component<IArticleOption,{}> {
               </a>
             </li>
             <li>
-            <ClockCircleOutlined />
+              <ClockCircleOutlined />
               <span>{this.props.time}</span>
             </li>
             <li>
-            <EyeOutlined />
+              <EyeOutlined />
               <span>
                 浏览（{this.props.scanCount}）
               </span>
             </li>
           </ul>
-            <Link to={"/article/"+this.props.id}>阅读原文</Link>
+          <Link to={"/article/" + this.props.id}>阅读原文</Link>
         </div>
       </Card>
-    )
+    );
   }
 }
