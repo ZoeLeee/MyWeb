@@ -10,6 +10,7 @@ import ArticleCom from '../Articles/ArticleComponent';
 import MainComponent from '../Main/Main';
 import { ProjectComponent } from '../../containers/Project/index';
 import NoMatch from './../NoMatch/index';
+import ProjectDetailPanel from '../projectDetail';
 require('./index.less');
 
 

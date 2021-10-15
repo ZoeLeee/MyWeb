@@ -1,14 +1,18 @@
-import { Layout, Tree } from 'antd';
-import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { ProjectApi } from '../../utils/Host';
-import { iFetch, RequestStatus } from '../../utils/Request';
-import { ProjectList, IProjectOption } from './../../components/ProjectList/index';
-import { Spin } from 'antd';
-import ProjectDetailPanel from './../../components/projectDetail/index';
-import { RouterProps } from 'react-router';
-import { DownOutlined } from '@ant-design/icons';
-require('./index.less');
+import { Layout, Tree } from "antd";
+import * as React from "react";
+import { useEffect, useState } from "react";
+import { ProjectApi } from "../../utils/Host";
+import { iFetch, RequestStatus } from "../../utils/Request";
+import {
+  ProjectList,
+  IProjectOption,
+} from "./../../components/ProjectList/index";
+import { Spin } from "antd";
+import ProjectDetailPanel from "./../../components/projectDetail/index";
+import { Route, RouterProps, Switch } from "react-router";
+import { DownOutlined } from "@ant-design/icons";
+import ProjectNavList from "../../components/ProjectNavList";
+require("./index.less");
 
 const { Content, Sider } = Layout;
 
@@ -28,7 +32,6 @@ interface ICategorys {
 let firstKey: string;
 
 export function ProjectComponent(props: RouterProps) {
-
   const [list, setList] = useState<IProjectMenu[]>([]);
   const [projectList, setProjectList] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -55,8 +58,7 @@ export function ProjectComponent(props: RouterProps) {
       let categorys = data.data;
       let list = updateNodes(categorys);
       firstKey = getFirstKey(list);
-      if (firstKey)
-        getProject(firstKey);
+      if (firstKey) getProject(firstKey);
       setList(list);
     }
     setLoading(false);
@@ -64,30 +66,26 @@ export function ProjectComponent(props: RouterProps) {
 
   const getProject = async (category: string) => {
     setLoadingProject(true);
-    let res = await iFetch(ProjectApi.GetProjectList + `?categoryId=${category}`);
+    let res = await iFetch(
+      ProjectApi.GetProjectList + `?categoryId=${category}`
+    );
     if (res.code === RequestStatus.Ok) {
       setProjectList(res.data);
     }
     setLoadingProject(false);
   };
-  const onSelect = (keys, event) => {
+  const onSelect = (key: string) => {
     setProject(null);
-    getProject(event.node.key);
+    getProject(key);
   };
 
   function getFirstKey(list: IProjectMenu[]) {
     if (list[0]?.children?.length > 0) {
       return getFirstKey(list[0].children);
-    }
-    else {
+    } else {
       return list[0]?.key;
     }
   }
-
-
-  const onExpand = () => {
-
-  };
 
   useEffect(() => {
     getData();
@@ -98,19 +96,16 @@ export function ProjectComponent(props: RouterProps) {
   }
 
   return (
-
     <Layout style={{ flexDirection: "row" }}>
-      <Sider width={200} className="site-layout-background" theme="light">
-        <Tree
-          defaultSelectedKeys={[firstKey]}
-          defaultExpandedKeys={[list[0]?.key ?? ""]}
+      <Sider width={250} className="site-layout-background" theme="light">
+        <ProjectNavList
+          list={list}
+          defaultOpenKey={list[0]?.key ?? ""}
+          defaultSelectedKey={firstKey}
           onSelect={onSelect}
-          onExpand={onExpand}
-          treeData={list}
-          switcherIcon={<DownOutlined />}
         />
       </Sider>
-      <Layout style={{ padding: '0 24px 24px' }}>
+      <Layout style={{ padding: "0 24px 24px" }}>
         <Content
           className="site-layout-background"
           style={{
@@ -119,15 +114,22 @@ export function ProjectComponent(props: RouterProps) {
             minHeight: 280,
           }}
         >
-          {
-            loadingProject ? <Spin /> : (
-              project ? <ProjectDetailPanel project={project} /> : <ProjectList setProjectId={setProject} data={projectList} />
-            )
-          }
+          <Switch>
+            <Route
+              exact
+              path="/project"
+              component={(rest) => (
+                <ProjectList {...rest} setProjectId={setProject} data={projectList} />
+              )}
+            />
+            <Route
+              exact
+              path="/project/detail"
+              component={(rest) => <ProjectDetailPanel {...rest} project={project} />}
+            />
+          </Switch>
         </Content>
       </Layout>
     </Layout>
   );
 }
-
-const Test = () => <div>ThreeJS</div>;
